@@ -1,0 +1,31 @@
+{
+  "name": "final-project-asdfas",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
+    "node-sass": "^4.6.0",
+    "serve-favicon": "~2.4.5"
+  },
+  "description": "a scheduler project for CS 290 at OSU",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OSU-CS290-F17/final-project-asdfas.git"
+  },
+  "author": "Fischer, Ian, Mac and Sean",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OSU-CS290-F17/final-project-asdfas/issues"
+  },
+  "homepage": "https://github.com/OSU-CS290-F17/final-project-asdfas#readme"
+}
