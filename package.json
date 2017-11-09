@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "sass": "node-sass -w sass/application.scss -o public/stylesheets/",
+    "sass-compile": "node-sass sass/application.scss -o public/stylesheets/"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
