@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "sass": "node-sass -w sass/application.scss -o public/stylesheets/",
-    "sass-compile": "node-sass sass/application.scss -o public/stylesheets/"
+    "sass-compile": "node-sass sass/application.scss -o public/stylesheets/",
+    "pack": "webpack"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -19,7 +20,13 @@
   },
   "description": "a scheduler project for CS 290 at OSU",
   "main": "app.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.8.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OSU-CS290-F17/final-project-asdfas.git"
