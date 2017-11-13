@@ -1,0 +1,24 @@
+a{
+	text-decoration: none;
+}
+.navbar ul{
+	list-style-type: none;
+	background-color: #dddddd;
+	margin: 0;
+	padding: 0;
+}
+.navbar div{
+	display: inline-block;
+}
+.courseCatalog{
+	float:right;
+	font-size: 80px;
+    font-weight: 100;
+    padding-right: 20px;
+    padding-top: 15px;
+}
+
+.logo img{
+	width: 250px;
+	height: 125px;
+}
