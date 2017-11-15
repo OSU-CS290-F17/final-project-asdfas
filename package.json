@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prestart": "node-sass sass/application.scss -o public/stylesheets/",
     "start": "node ./bin/www",
     "sass": "node-sass -w sass/application.scss -o public/stylesheets/",
     "sass-compile": "node-sass sass/application.scss -o public/stylesheets/",
