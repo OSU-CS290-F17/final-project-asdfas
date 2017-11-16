@@ -1,1 +1,6 @@
-@import "express"; // delete once work actually starts
+// include base styles--this goes first
+@import "base/variables";
+@import "base/typography";
+@import "base/base";
+
+// other styles
