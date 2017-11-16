@@ -1,5 +1,9 @@
 .tableClassSets{
-	margin-top: 100px;
+	margin: 100px;
+	border: 1px solid black;
+	padding-bottom: 20px;
+	background-color:white;
+	
 }
 .tableClassSets h2{
 	text-align: center;
@@ -23,5 +27,13 @@ th, td {
 
 #addButton{
 	margin-top: 20px;
+	width:100px;
+	height: 50px;
+	background-color:white;
+	border: 1px solid #dc4405;
+	transition-duration: 0.4s;
 }
-
+#addButton:hover{
+	color:white;
+	background-color: #dc4405;
+}

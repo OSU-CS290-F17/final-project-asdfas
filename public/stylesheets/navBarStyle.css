@@ -1,16 +1,32 @@
+body{
+	margin:0;
+	background-color: #ADD8E6;
+}
 a{
 	text-decoration: none;
+	color: black;
+}
+a:hover{
+	color:white;
+}
+.navbar{
+	margin: 0;
+	width: 100%;
+
 }
 .navbar ul{
 	list-style-type: none;
-	background-color: #dddddd;
+	background-color: #dc4405;
 	margin: 0;
-	padding: 0;
+	padding-left: 20px;
+	
+	
 }
 .navbar div{
 	display: inline-block;
 }
 .courseCatalog{
+	color: black;
 	float:right;
 	font-size: 80px;
     font-weight: 100;
