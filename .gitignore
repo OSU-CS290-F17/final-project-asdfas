@@ -27,3 +27,7 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
+
+# Ignore generated sass and webpack files
+public/dist/*
+public/stylesheets/*
