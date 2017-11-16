@@ -1,0 +1,67 @@
+// local vars
+$schedule-height: 600px;
+$schedule-width: 720px;
+$times-width: 120px;
+$days-width: $schedule-width - $times-width;
+$day-width: $days-width / 5;
+$hour-height: $schedule-height / 12;
+
+/*
+  Use t-[time] to indicate time, where time is the 24 hour time of the class
+  Use l-[length] where length is the time in hours of the length of the class. 1.5 hours is written as l-15, for example.
+*/
+@for $i from 8 through 21 {
+  .t-#{$i} {
+    top: $hour-height * ($i - 8);
+    background-color: mix(purple, red, 4% * $i);
+  }
+}
+@for $j from 1 through 6 {
+  .l-#{$j} {
+    height: ($hour-height * $j);
+  }
+  .l-#{$j}5 {
+    height: (($hour-height * $j) + $hour-height / 2);
+  }
+}
+.class {
+  position: relative;
+}
+.week {
+  width: $schedule-width;
+  display: flex;
+}
+.times {
+  width: $times-width;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  .time {
+    height: $hour-height - 1;
+    line-height: $hour-height - 1;
+    vertical-align: middle;
+    border-bottom: 1px solid black;
+    &:first-child {
+      height: $hour-height - 2;
+      line-height: $hour-height - 2;
+      border-top: 1px solid black;
+    }
+  }
+}
+.days {
+  $day-padding: 5px;
+  width: $days-width;
+  display: flex;
+  .day {
+    width: $day-width - 2 * $day-padding;
+    height: $schedule-height;
+    padding: 0px 5px;
+  }
+}
+
+.class {
+  padding: 5px;
+  h3, p {
+    margin: 0px;
+  }
+}
