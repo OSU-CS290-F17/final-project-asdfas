@@ -36,11 +36,13 @@
 
         <div class="added-courses-container">
           <div class="added-course">
-            Example course 1
+            <span class="course-subject">CS</span>
+            <span class="course-number">290</span>
           </div>
 
           <div class="added-course">
-            Example course 2
+            <span class="course-subject">WR</span>
+            <span class="course-number">214</span>
           </div>
         </div>
       </div>
@@ -50,6 +52,9 @@
         <div class="add-break-container">
           <label for="name-input" class="input-label">Name</label>
           <input type="text" name="name-input" class="name-input">
+
+          <label for="length-input" class="input-label">Length</label>
+          <input type="number" name="length-input" class="length-input">minutes
 
           <div class="break-times">
             <label for="start-time-input" class="input-label">Start time</label>
@@ -63,21 +68,48 @@
 
         </div>
 
-        <div class="added-breaks-container">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Length (in minutes)</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+          </tr>
+          <tr class="added-break">
+            <td class="break-name">Breakfast</td>
+            <td class="break-length">30</td>
+            <td class="break-start-time">08:00 AM</td>
+            <td class="break-end-time">09:00 AM</td>
+          </tr>
+          <tr class="added-break">
+            <td class="break-name">Lunch</td>
+            <td class="break-length">45</td>
+            <td class="break-start-time">11:30 AM</td>
+            <td class="break-end-time">03:00 PM</td>
+          </tr>
+        </table>
+
+        <!-- <div class="added-breaks-container">
           <div class="added-break">
-            Example break 1
+            <span class="break-name">Breakfast</span>
+            <span class="break-length">30</span> minutes
+            <span class="break-start-time">08:00 AM</span> -
+            <span class="break-end-time">09:00 AM</span>
           </div>
 
           <div class="added-break">
-            Example break 2
+            <span class="break-name">Lunch</span>
+            <span class="break-length">45</span> minutes
+            <span class="break-start-time">11:30 AM</span> -
+            <span class="break-end-time">03:00 PM</span>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="schedules-container">
         <div class="add-schedule-container">
           <h2>Schedules</h2>
-          <button type="button" id="generate-schedules-button">Generate Schedules</button>
+          <button type="button" id="generate-schedules-button">Generate</button>
         </div>
         <div class="generated-schedules">
           <div class="generated-schedule">

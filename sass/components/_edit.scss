@@ -36,9 +36,26 @@ h2 {
   margin-bottom: 10px;
 }
 
+// .added-courses-container {
+//   height: 182px;
+//   border: 1px solid black;
+// }
+//
+.added-course {
+  padding: 5px
+}
+
 .breaks-container {
   position: absolute;
   left: 50%;
+}
+
+.courses-container label, .breaks-container label {
+  margin-left: 10px;
+}
+
+.breaks-container .length-input {
+  width: 50px;
 }
 
 .break-times {
@@ -47,6 +64,13 @@ h2 {
 
 .add-break-container {
   line-height: 25px;
+}
+
+.breaks-container table {
+  width: 75%;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid black;
 }
 
 .schedules-container {
@@ -63,16 +87,12 @@ h2 {
 
 .added-courses-container, .added-breaks-container, .generated-schedules {
   font-size: 18px;
-  margin: 10px;
+  margin: 20px;
 }
 
-.add-schedule-container h2 {
-  display: inline-block;
-}
-
-.add-schedule-container button {
-  position: relative;
-  bottom: 15px;
+.add-schedule-container {
+  display: flex;
+  justify-content: center;
 }
 
 button[type="button"] {
@@ -86,6 +106,13 @@ button[type="button"] {
 .add-course-container button[type="button"], .add-break-container button[type="button"] {
   width: 50px;
   height: 35px;
+  margin-left: 10px;
+}
+
+.add-schedule-container button[type="button"] {
+  width: 75px;
+  height: 35px;
+  align-self: center;
 }
 
 button[type="button"]:hover {
