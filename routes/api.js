@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var classRetriever = require('../web_scraping/webScrape.js');
+
 courses = {
   "cs290": {
     "001": {
@@ -22,6 +24,10 @@ courses = {
   }
 };
 router.get('/:subject_code/:course_code', function(req, res, next) {
+  console.log(req.params.subject_code);
+  var coursesFromDatabase = classRetriever.getClass(req.params.subject_code.toLowerCase(), req.params.course_code.toLowerCase());
+  console.log(coursesFromDatabase);
+
   var requestedCourse = req.params.subject_code.toLowerCase() + req.params.course_code.toLowerCase();
   if (requestedCourse in courses) {
     var data = courses[requestedCourse];
@@ -30,6 +36,7 @@ router.get('/:subject_code/:course_code', function(req, res, next) {
   } else {
     res.send("Course not found");
   }
+  
 });
 
 module.exports = router;

@@ -17,6 +17,7 @@
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.11",
     "node-sass": "^4.6.0",
+    "python-shell": "^0.4.0",
     "serve-favicon": "~2.4.5"
   },
   "description": "a scheduler project for CS 290 at OSU",
