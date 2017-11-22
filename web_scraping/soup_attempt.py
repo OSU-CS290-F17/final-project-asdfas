@@ -4,8 +4,8 @@ import sys
 import json
 from datetime import datetime
 
-subject_code = sys.argv[1] #input("Subject: ")
-course_num = sys.argv[2] #input("Num: ")
+subject_code = sys.argv[1]
+course_num = sys.argv[2]
 term = sys.argv[3]
 
 catalog_URL = "http://catalog.oregonstate.edu/CourseDetail.aspx?subjectcode=" + str(subject_code) + "&coursenumber=" + str(course_num)
@@ -22,7 +22,6 @@ if (not error):
     #print(soup.find_all(id="ctl00_ContentPlaceHolder1_lblCoursePrereqs")
     tbody = soup.find("tbody")
     table = soup.find("table", {"id" : "ctl00_ContentPlaceHolder1_SOCListUC1_gvOfferings"})
-    #print(soup.find_all("td", "white-space:nowrap;"))
     data = []
 
     #https://stackoverflow.com/questions/23377533/python-beautifulsoup-parsing-table
@@ -41,17 +40,16 @@ if (not error):
         if(wanted_cells[0] == term and wanted_cells[4] == "Corv" and int(wanted_cells[5]) > 0):
             correct_term_and_campus.append(wanted_cells)
         else:
-            print()
-            #print ("ignoring, term:", wanted_cells[0], "campus:", wanted_cells[4], "avail seats:", wanted_cells[5])
+            print ("ignoring, term:", wanted_cells[0], "campus:", wanted_cells[4], "avail seats:", wanted_cells[5])
     file_path = "data/" + subject_code + course_num + "_" + term + ".json"
     with open(file_path, 'w') as f:
         d = datetime.now()
-        json_time = json.dumps({'data_retrieved'.strip()    : d.isoformat()})
+        json_time = json.dumps({'data_retrieved'.strip() : d.isoformat()})
         f.write(json_time + ',\n')
         for row in correct_term_and_campus:
             json.dump({'Term:': row[0],
-                                    'CRN': row[1],
-                                    'Time': row[2],
-                                    'Location': row[3],
-                                    'Availability': row[5]}, f, indent=4)
+                                'CRN': row[1],
+                                'Time': row[2],
+                                'Location': row[3],
+                                'Availability': row[5]}, f, indent=4)
             #f.write(row_json + ',\n')
