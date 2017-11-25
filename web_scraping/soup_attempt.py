@@ -14,11 +14,12 @@ content = urllib.request.urlopen(catalog_URL).read()
 
 soup = BeautifulSoup(content, "html.parser")
 
-print("course: ", subject_code, course_num, term)
+#print("course: ", subject_code, course_num, term)
 error = False if (soup.find_all(id="ctl00_ContentPlaceHolder1_lblError") == []) else True;
-print("404: ", error)
+#print("404: ", error)
 
 if (not error):
+    #if False:
     #print(soup.find_all(id="ctl00_ContentPlaceHolder1_lblCoursePrereqs")
     tbody = soup.find("tbody")
     table = soup.find("table", {"id" : "ctl00_ContentPlaceHolder1_SOCListUC1_gvOfferings"})
@@ -34,22 +35,29 @@ if (not error):
         #Want:
             #0: Term, 1: CRN, 2: Sec, 3: Cred, 5: Instructor, 6: Time, 7: Location, 8: Camp, 10: Type, 11: Status, 12: Cap, 13: Cur, 14: avail
         wanted_indices = [0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14]
-        bare_wanted_indices = [0, 1, 6, 7, 8, 14]
+        bare_wanted_indices = [0, 1, 6, 7, 8, 10, 14]
+        #0: Term, 1: CRN, 2: Time, 3: Location, 4: Camp, 5: Type, 6: Availability
         wanted_cells = [cells[i] for i in bare_wanted_indices]
 
-        if(wanted_cells[0] == term and wanted_cells[4] == "Corv" and int(wanted_cells[5]) > 0):
+        if(wanted_cells[0] == term and wanted_cells[4] == "Corv" and int(wanted_cells[6]) > 0):
             correct_term_and_campus.append(wanted_cells)
-        else:
-            print ("ignoring, term:", wanted_cells[0], "campus:", wanted_cells[4], "avail seats:", wanted_cells[5])
-    file_path = "data/" + subject_code + course_num + "_" + term + ".json"
+        #else:
+            #print ("ignoring, term:", wanted_cells[0], "campus:", wanted_cells[4], "avail seats:", wanted_cells[5])
+    file_path = "web_scraping/data/" + subject_code + course_num + "_" + term + ".json"
+    children = []
     with open(file_path, 'w') as f:
-        d = datetime.now()
-        json_time = json.dumps({'data_retrieved'.strip() : d.isoformat()})
-        f.write(json_time + ',\n')
         for row in correct_term_and_campus:
-            json.dump({'Term:': row[0],
+            children.append({'Term:': row[0],
                                 'CRN': row[1],
                                 'Time': row[2],
                                 'Location': row[3],
-                                'Availability': row[5]}, f, indent=4)
-            #f.write(row_json + ',\n')
+                                'Type': row[5],
+                                'Availability': row[6]})
+        container = {}
+        d = datetime.now()
+        container['time'] = d.isoformat()
+        container['sections'] = children
+        json.dump(container, f, indent=4)
+        print(json.dumps(container, indent=4))
+
+    print("Done")
