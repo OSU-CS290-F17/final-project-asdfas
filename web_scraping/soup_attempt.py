@@ -58,6 +58,6 @@ if (not error):
         container['time'] = d.isoformat()
         container['sections'] = children
         json.dump(container, f, indent=4)
-        print(json.dumps(container, indent=4))
+        #print(json.dumps(container, indent=4))
 
     print("Done")
