@@ -4,9 +4,8 @@ import sys
 import json
 from datetime import datetime
 
-
 def strip_whitespace(str):
-    str = str.replace('\r', " ").replace("\n", " ").replace('\t', " ").replace('<br/>', " ")
+    str = str.replace('\r', " ").replace("\n", " ").replace('\t', " ").replace('<br/>', " ").replace('<br>', " ")
     str = ' '.join(str.split())
     return str
 
@@ -16,7 +15,11 @@ subject_code = sys.argv[1]
 course_num = sys.argv[2]
 term = sys.argv[3]
 
-catalog_URL = "http://catalog.oregonstate.edu/CourseDetail.aspx?subjectcode=" + str(subject_code) + "&coursenumber=" + str(course_num)
+DEBUG = False
+if len(sys.argv) > 4:
+    DEBUG = True
+
+catalog_URL = "http://catalog.oregonstate.edu/CourseDetail.aspx?subjectcode=" + str(subject_code) + "&coursenumber=" + str(course_num) + "&Term=201802&Campus=corvallis"
 
 content = urllib.request.urlopen(catalog_URL).read()
 
@@ -44,6 +47,12 @@ if (not error):
         for i in range(len(cells)):
             if i != 6:
                 cells[i] = strip_whitespace(cells[i].text)
+            else:
+                date_time_tag = cells[i]
+                date_time_tag = str(cells[i].findChildren()[0])
+                date_time_tag = strip_whitespace(date_time_tag)
+                date_time_tag = date_time_tag[len('<font size=\"2\">'):-len('</font>')]
+                cells[i] = date_time_tag
         #Want this data from list:     0: Term, 1: CRN, 2: Sec, 3: Cred, 5: Instructor, 6: Time, 
         #                              7: Location, 8: Camp, 10: Type, 11: Status, 12: Cap, 13: Cur, 14: avail
         wanted_indices = [0, 1, 2, 3, 5, 6, 7, 8, 10, 14]
@@ -51,40 +60,54 @@ if (not error):
         #0: Term, 1: CRN, 2: Sec, 3: Cred, 4: Instructor, 5: Time, 6: Location, 7: Camp, 8: Type, 9: Availability
         wanted_cells = [cells[i] for i in wanted_indices]
 
-        if(wanted_cells[0] == term and wanted_cells[7] == "Corv" and int(wanted_cells[9]) > 0):
+        if(wanted_cells[0] == term and wanted_cells[7] == "Corv" and int(wanted_cells[9]) > 0 
+            and (cells[11].strip() == 'Open' or cells[11].strip() == 'open') and cells[6].strip() != "TBA"):
             suitable_section.append(wanted_cells)
-        #else:
-            #print ("ignoring, term:", wanted_cells[0], "campus:", wanted_cells[4], "avail seats:", wanted_cells[5])
-    file_path = "../web_scraping/data/" + subject_code + course_num + "_" + term + ".json"
-    children = []
-    with open(file_path, 'w') as f:
-        for row in suitable_section:
-            date_time_tag = row[5]
-            date_time_tag = str(row[5].findChildren()[0])
-            date_time_tag = date_time_tag[len('<font size=\"2\">'):-len('</font>')]
-            date_tokens = date_time_tag.split()
-            new_string_list = [date_tokens[i] for i in (0, 1)]
-            new_string = ' '.join(new_string_list)
-            days = strip_whitespace(date_time_tag)
-                #.replace('<br>', '\n')
-            times = "" 
-            children.append({'Term:': row[0],
-                                'CRN': row[1],
-                                'Section': row[2],
-                                'Credits': row[3],
-                                'Instructor': row[4],
-                                #'Days': new_string,
-                                #'Time': times,
-                                'Location': row[6],
-                                'Type': row[8],
-                                'Availability': row[9]})
-        container = {}
-        d2 = datetime.now()
-        container['course'] = subject_code + course_num
-        container['name'] = strip_whitespace(name_text)
-        container['prereqs'] = strip_whitespace(prereqs_text)
-        container['time_started'] = start_time.isoformat()
-        container['time_retrieved'] = d2.isoformat()
-        container['sections'] = children
-        json.dump(container, f, indent=4)
-    print("Done")
+        elif DEBUG:
+            print ("ignoring, term:", wanted_cells[0], wanted_cells[0] == term, "campus:", wanted_cells[7], wanted_cells[7] == "Corv", "avail seats:", wanted_cells[9], int(wanted_cells[9]) > 0, "status", cells[11])
+    file_path = subject_code + course_num + "_" + term + ".json"
+    if DEBUG:
+        file_path = "../web_scraping/data/" + file_path
+    else:
+        file_path = "web_scraping/data/" + file_path
+    if len(suitable_section) >= 1:
+        print("Length: ", len(suitable_section))
+        with open(file_path, 'w') as f:
+            children = {}
+            for row in suitable_section:
+                date_tokens = row[5].split()
+                print("Token: ", date_tokens)
+                days = date_tokens[0]
+                time_range = date_tokens[1]
+                class_start_time = 0
+                class_end_time = 0
+                if (len(time_range) == 9):
+                    class_start_time = int(time_range[:4])
+                    class_end_time  = int(time_range[5:9])
+                length_minutes = class_end_time - class_start_time
+
+                location = ' '.join(row[6].split()[0:2])
+
+                children[row[2]] = {'term:': row[0],
+                                    'crn': row[1],
+                                    'credits': row[3],
+                                    'instructor': row[4],
+                                    'days': days,
+                                    'time': class_start_time,
+                                    'time_range': time_range,
+                                    'length_minutes': length_minutes,
+                                    'location': location,
+                                    'type': row[8],
+                                    'availability': row[9]}
+            container = {}
+            d2 = datetime.now()
+            container['course'] = subject_code + course_num
+            container['name'] = strip_whitespace(name_text)
+            container['prereqs'] = strip_whitespace(prereqs_text)
+            #container['time_started'] = start_time.isoformat()
+            container['time_retrieved'] = d2.isoformat()
+            container['sections'] = children
+            json.dump(container, f, indent=4)
+            if DEBUG:
+                print(json.dumps(container, indent=4))
+            print("Done")
