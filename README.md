@@ -6,6 +6,8 @@ Make sure to run `npm install` after downloading.
 
 Use command `npm start` to start a development server.
 
+Install the current python version, and then run "pip install beautifulsoup4" if you are on windows. Linux--use your package manager to install "beautifulsoup4," if applicable.
+
 ## Commands
 
 - `npm run start` starts the server

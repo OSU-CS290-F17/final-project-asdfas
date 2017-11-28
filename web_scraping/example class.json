@@ -1,0 +1,73 @@
+{
+    "course": "mth254",
+    "name": "MTH 254. VECTOR CALCULUS I (4).",
+    "prereqs": "MTH 252 [C-] or MTH 252H [C-]",
+    "time_retrieved": "2017-11-27T17:16:40.441934",
+    "sections": {
+        "030": {
+            "term:": "W18",
+            "crn": "30110",
+            "credits": "4",
+            "instructor": "Johnson, T.",
+            "days": "MWF",
+            "time": 800,
+            "time_range": "0800-0850",
+            "length_minutes": 50,
+            "location": "ILLC 155",
+            "type": "Lecture",
+            "availability": "19"
+        },
+        "031": {
+            "term:": "W18",
+            "crn": "30111",
+            "credits": "",
+            "instructor": "Staff",
+            "days": "R",
+            "time": 800,
+            "time_range": "0800-0850",
+            "length_minutes": 50,
+            "location": "MLM 033",
+            "type": "Recitation",
+            "availability": "5"
+        },
+        "032": {
+            "term:": "W18",
+            "crn": "32246",
+            "credits": "",
+            "instructor": "Staff",
+            "days": "R",
+            "time": 900,
+            "time_range": "0900-0950",
+            "length_minutes": 50,
+            "location": "MLM 033",
+            "type": "Recitation",
+            "availability": "6"
+        },
+        "033": {
+            "term:": "W18",
+            "crn": "33262",
+            "credits": "",
+            "instructor": "Staff",
+            "days": "R",
+            "time": 1000,
+            "time_range": "1000-1050",
+            "length_minutes": 50,
+            "location": "MLM 033",
+            "type": "Recitation",
+            "availability": "5"
+        },
+        "034": {
+            "term:": "W18",
+            "crn": "33263",
+            "credits": "",
+            "instructor": "Staff",
+            "days": "R",
+            "time": 1100,
+            "time_range": "1100-1150",
+            "length_minutes": 50,
+            "location": "MLM 033",
+            "type": "Recitation",
+            "availability": "3"
+        }
+    }
+}
