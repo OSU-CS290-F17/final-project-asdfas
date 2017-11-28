@@ -9,7 +9,7 @@ module.exports = {
   module: {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
-      { test: /\.handlebars$/, loader: 'handelbars-loader' }
+      { test: /\.handlebars$/, loader: 'handlebars-loader' }
     ]
   }
 }
