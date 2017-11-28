@@ -71,7 +71,6 @@ if (not error):
     else:
         file_path = "web_scraping/data/" + file_path
     if len(suitable_section) >= 1:
-        print("Length: ", len(suitable_section))
         with open(file_path, 'w') as f:
             children = {}
             for row in suitable_section:
@@ -98,7 +97,7 @@ if (not error):
                                     'length_minutes': length_minutes,
                                     'location': location,
                                     'type': row[8],
-                                    'availability': row[9]
+                                    'availability': row[9]}
             container = {}
             d2 = datetime.now()
             container['course'] = subject_code + course_num
