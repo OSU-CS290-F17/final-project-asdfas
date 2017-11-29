@@ -1,4 +1,5 @@
 import createSchedules from "./scheduleGenerator";
+import Schedule from './schedule';
 
 class Scheduler {
 
@@ -101,6 +102,7 @@ class Scheduler {
 
   // call createSchedules with courses and breaks
   handleCreateSchedulesClick(event) {
+    this.schedules = createSchedules(this.courses, this.breaks).map(schedule => new Schedule(schedule));
 
   }
 

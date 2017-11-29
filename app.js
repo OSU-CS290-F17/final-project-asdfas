@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 
 var api = require('./routes/api');
+var scheduler = require('./routes/scheduler');
 
 var addCourse = require('./routes/addCourse');
 var addBreak = require('./routes/addBreak');
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', api);
+app.use('/schedules', scheduler);
 app.get('/', function(req, res, next) {
   res.render('index');
 });
