@@ -8,6 +8,9 @@ var exphbs = require('express-handlebars');
 var api = require('./routes/api');
 var scheduler = require('./routes/scheduler');
 
+var addCourse = require('./routes/addCourse');
+var addBreak = require('./routes/addBreak');
+
 var app = express();
 
 // view engine setup
@@ -26,5 +29,8 @@ app.use('/schedules', scheduler);
 app.get('/', function(req, res, next) {
   res.render('index');
 });
+
+app.post('/addCourse', addCourse);
+app.post('/addBreak', addBreak);
 
 module.exports = app;
