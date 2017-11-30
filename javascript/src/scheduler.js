@@ -10,7 +10,7 @@ class Scheduler {
     this.courses = data.courses;
     this.breaks = data.breaks;
     this.schedules = data.schedules;
-
+    
     this.handleAddBreakClick = this.handleAddBreakClick.bind(this);
     this.handleAddCourseClick = this.handleAddCourseClick.bind(this);
     this.handleCreateSchedulesClick = this.handleCreateSchedulesClick.bind(this);
@@ -26,7 +26,7 @@ class Scheduler {
   // handle[x] functions should be passed directly to event listeners
 
   // use api route to get course data from server and add to existing courses
-  handleAddCourseClick(event) {
+  handleAddCourseClick = (event) => {
     console.log("handling add class click");
     var self = this;
     var subject = document.querySelector('.subject-input').value.toUpperCase();
@@ -67,7 +67,7 @@ class Scheduler {
   }
 
   // generate new break based on form data and add to breaks
-  handleAddBreakClick(event) {
+  handleAddBreakClick = (event) => {
     console.log("handling add break click");
     var name = document.querySelector('.name-input').value;
     var length = document.querySelector('.length-input').value;
@@ -96,13 +96,13 @@ class Scheduler {
   }
 
   // call createSchedules with courses and breaks
-  handleCreateSchedulesClick(event) {
+  handleCreateSchedulesClick = (event) => {
     this.schedules = createSchedules(this.courses, this.breaks).map(schedule => new Schedule(schedule));
 
   }
 
   // post form data to server
-  handleSaveClick(event) {
+  handleSaveClick = (event) => {
 
   }
 }
