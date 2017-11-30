@@ -26,9 +26,9 @@ router.get('/:subject_code/:course_code', function(req, res, next) {
   if (requestedCourse in courses) {
     var data = courses[requestedCourse];
     res.header("Content-Type", 'application/json');
-    res.send(JSON.stringify(data));
+    res.status(200).send(JSON.stringify(data));
   } else {
-    res.send("Course not found");
+    res.status(404).send("Course not found");
   }
 });
 

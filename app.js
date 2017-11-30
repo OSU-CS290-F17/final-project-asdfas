@@ -30,7 +30,5 @@ app.get('/', function(req, res, next) {
   res.render('index');
 });
 
-app.post('/addCourse', addCourse);
-app.post('/addBreak', addBreak);
 
 module.exports = app;

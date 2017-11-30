@@ -11,4 +11,4 @@ class Schedule {
   }
 }
 
-export default Course;
+// export default Course;
