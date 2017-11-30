@@ -10,7 +10,7 @@ class Scheduler {
     this.courses = data.courses;
     this.breaks = data.breaks;
     this.schedules = data.schedules;
-    
+
     this.handleAddBreakClick = this.handleAddBreakClick.bind(this);
     this.handleAddCourseClick = this.handleAddCourseClick.bind(this);
     this.handleCreateSchedulesClick = this.handleCreateSchedulesClick.bind(this);
@@ -50,7 +50,7 @@ class Scheduler {
           var newCourse = {};
           newCourse[fullCourse] = sections;
           self.courses.push(newCourse);
-          console.log('courses after add: ', self.courses);
+          console.log('courses after add: ', JSON.stringify(self.courses));
           var courseContext = {
             subject: subject,
             course: course
@@ -84,7 +84,7 @@ class Scheduler {
         endTime: endTime
       };
       this.breaks.push(breakContext);
-      console.log('breaks after add: ', this.breaks);
+      console.log('breaks after add: ', JSON.stringify(this.breaks));
       var breakTemplate = require('../../views/partials/break.handlebars');
       var breakHTML = breakTemplate(breakContext);
       document.querySelector('.top-boxes table tbody').insertAdjacentHTML('beforeend', breakHTML);

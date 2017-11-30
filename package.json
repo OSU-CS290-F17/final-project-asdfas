@@ -16,8 +16,7 @@
     "express": "~4.15.5",
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.11",
-    "handlebars-loader": "^1.6.0",
-    "node-sass": "^4.6.0",
+    "node-sass": "^4.7.2",
     "serve-favicon": "~2.4.5"
   },
   "description": "a scheduler project for CS 290 at OSU",

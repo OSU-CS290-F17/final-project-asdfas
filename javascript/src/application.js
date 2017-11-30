@@ -27,6 +27,6 @@ var data = {
   "schedules": []
 };
 
-console.log('initial data: ', data);
+console.log('initial data: ', JSON.stringify(data));
 
 var scheduler = new Scheduler(data);
