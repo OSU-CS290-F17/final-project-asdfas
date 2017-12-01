@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var classRetriever = require('../web_scraping/webScrape.js');
+//var classRetriever = require('../web_scraping/webScrape.js');
 
 courses = {
   "cs290": {
