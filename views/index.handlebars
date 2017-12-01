@@ -2,28 +2,38 @@
 
 	<div class = "tableClassSets">
 		
-		<div><h2>CLASS SETS</h2></div>
+		<div><h2>Schedual Sets</h2></div>
 
+
+
+	{{#unless classSet}}
+	<p>No Schedual Sets</p>
+	{{/unless}}
+
+
+
+	{{#if classSet }}
 		<div class= "tableHolder">
 			<table>
 				<thread>
 				<tr>
 					<th>NAME</th>
-					<th>OTHER1</th>
-					<th>OTHER2</th>
+					<th>Credit Count</th>
+					<th>Term</th>
 				</tr>
 				</thread>
 				<tbody>
-				<tr>
-					<td>Sean</td>
-					<td>is the</td>
-					<td>best</td>
-				</tr>
+
+				{{#each classSet}}
+					{{> classSets}}
+				{{/each}}
+
 				</tbody>
 			</table>
 		</div>
 	
 	<div>
+	{{/if}}
 		<div class = "addButtonHolder">
 			<button id="addButton" class="action-button">New Set</button>
 		</div>
