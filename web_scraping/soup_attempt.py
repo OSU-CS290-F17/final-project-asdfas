@@ -3,7 +3,6 @@ import urllib.request
 import sys
 import json
 from datetime import datetime
-import os
 
 def strip_whitespace(str):
     str = str.replace('\r', " ").replace("\n", " ").replace('\t', " ").replace('<br/>', " ").replace('<br>', " ")
@@ -67,8 +66,10 @@ if (not error):
         elif DEBUG:
             print ("ignoring, term:", wanted_cells[0], wanted_cells[0] == term, "campus:", wanted_cells[7], wanted_cells[7] == "Corv", "avail seats:", wanted_cells[9], int(wanted_cells[9]) > 0, "status", cells[11])
     file_path = subject_code + course_num + "_" + term + ".json"
-    script_path = os.path.dirname(os.path.realpath(__file__))
-    file_path = script_path + "web_scraping/data/" + file_path
+    if DEBUG:
+        file_path = "../web_scraping/data/" + file_path
+    else:
+        file_path = "web_scraping/data/" + file_path
     if len(suitable_section) >= 1:
         with open(file_path, 'w') as f:
             children = {}
