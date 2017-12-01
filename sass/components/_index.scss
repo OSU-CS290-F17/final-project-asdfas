@@ -7,7 +7,7 @@
 }
 .tableClassSets h2{
 	text-align: center;
-	font-size: 50px;
+	font-size: 40px;
 }
 .tableClassSets p{
 	text-align: center;
@@ -38,6 +38,20 @@ th, td {
 	transition-duration: 0.4s;
 }
 #addButton:hover{
-	color:white;
 	background-color: #dc4405;
+	color:white;
+	cursor:pointer;
 }
+.tableHolder a {
+  text-decoration: underline;
+ 
+}
+
+.tableHolder a:hover {
+  color: blue;
+}
+.addButtonHolder a {
+  text-decoration: none;
+  color: black;
+}
+
