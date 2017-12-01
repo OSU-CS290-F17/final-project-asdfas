@@ -32,5 +32,7 @@ benchmarks/graphs
 public/dist/*
 public/stylesheets/*
 
+# Ignore generated .json class data
+web_scraping/data/*
 # Ignore VScode config
 .vscode/
