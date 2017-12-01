@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var classRetriever = require('../web_scraping/webScrape.js');
+
 courses = {
   "cs290": {
     "001": {
@@ -23,13 +25,33 @@ courses = {
 };
 router.get('/:subject_code/:course_code', function(req, res, next) {
   var requestedCourse = req.params.subject_code.toLowerCase() + req.params.course_code.toLowerCase();
-  if (requestedCourse in courses) {
-    var data = courses[requestedCourse];
-    res.header("Content-Type", 'application/json');
-    res.status(200).send(JSON.stringify(data));
-  } else {
-    res.status(404).send("Course not found");
-  }
+  // var out = classRetriever.getClassJSON(req.params.subject_code.toLowerCase(), req.params.course_code.toLowerCase());
+  var subjectCode = req.params.subject_code.toLowerCase();
+  var courseNum = req.params.course_code.toLowerCase();
+
+  var PythonShell = require('python-shell');
+  var fs = require('fs');
+    var options = {
+        mode: "text",
+        args: [subjectCode, courseNum, 'W18']
+    };
+    var parsedData = "Test pls ignore";
+    PythonShell.run('web_scraping/soup_attempt.py', options, function(results){
+        fs.readFile('web_scraping/data/'+subjectCode+courseNum+"_W18.json", 'utf8', function (err, data) {
+            if (err) {
+              res.statusCode = 404;
+              // res.header("Content-Type", 'application/json');
+              res.send("Course not found");
+            }
+            else {
+              res.statusCode = 200;
+              parsedData = JSON.parse(data);
+              //console.log(JSON.stringify(parsedData));
+              res.header("Content-Type", 'application/json');
+              res.send(JSON.stringify(parsedData, null, 2));
+            }
+        });
+    });  
 });
 
 module.exports = router;

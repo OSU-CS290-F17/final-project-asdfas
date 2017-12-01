@@ -1,0 +1,39 @@
+.tableClassSets{
+	margin: 100px;
+	border: 1px solid black;
+	padding-bottom: 20px;
+	background-color:white;
+	
+}
+.tableClassSets h2{
+	text-align: center;
+	font-size: 50px;
+}
+.tableClassSets table{
+	margin-left:auto; 
+    margin-right:auto;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+
+.addButtonHolder{
+	text-align: center;
+}
+
+#addButton{
+	margin-top: 20px;
+	width:100px;
+	height: 50px;
+	background-color:white;
+	border: 1px solid #dc4405;
+	transition-duration: 0.4s;
+}
+#addButton:hover{
+	color:white;
+	background-color: #dc4405;
+}
