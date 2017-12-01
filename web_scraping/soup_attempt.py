@@ -3,6 +3,7 @@ import urllib.request
 import sys
 import json
 from datetime import datetime
+import os
 
 def strip_whitespace(str):
     str = str.replace('\r', " ").replace("\n", " ").replace('\t', " ").replace('<br/>', " ").replace('<br>', " ")
@@ -11,9 +12,9 @@ def strip_whitespace(str):
 
 start_time = datetime.now()
 
-subject_code = sys.argv[1]
+subject_code = sys.argv[1].upper()
 course_num = sys.argv[2]
-term = sys.argv[3]
+term = sys.argv[3].upper()
 
 DEBUG = False
 if len(sys.argv) > 4:
@@ -60,16 +61,17 @@ if (not error):
         #0: Term, 1: CRN, 2: Sec, 3: Cred, 4: Instructor, 5: Time, 6: Location, 7: Camp, 8: Type, 9: Availability
         wanted_cells = [cells[i] for i in wanted_indices]
 
-        if(wanted_cells[0] == term and wanted_cells[7] == "Corv" and int(wanted_cells[9]) > 0 
-            and (cells[11].strip() == 'Open' or cells[11].strip() == 'open') and cells[6].strip() != "TBA"):
-            suitable_section.append(wanted_cells)
+        if(wanted_cells[0] == term and wanted_cells[7] == "Corv" and wanted_cells[9] != 'WL'):
+            if (int(wanted_cells[9]) > 0 and (cells[11].strip() == 'Open' or cells[11].strip() == 'open') and cells[6].strip() != "TBA"):
+                suitable_section.append(wanted_cells)
         elif DEBUG:
-            print ("ignoring, term:", wanted_cells[0], wanted_cells[0] == term, "campus:", wanted_cells[7], wanted_cells[7] == "Corv", "avail seats:", wanted_cells[9], int(wanted_cells[9]) > 0, "status", cells[11])
-    file_path = subject_code + course_num + "_" + term + ".json"
-    if DEBUG:
-        file_path = "../web_scraping/data/" + file_path
-    else:
-        file_path = "web_scraping/data/" + file_path
+            print ("ignoring, term:", wanted_cells[0], wanted_cells[0] == term, "campus:", wanted_cells[7], wanted_cells[7] == "Corv", "avail seats:", wanted_cells[9], "status", cells[11])
+    file_path = "/data/"+ subject_code + course_num + "_" + term + ".json"
+    file_path = os.path.dirname(os.path.realpath(__file__)) + file_path
+
+    file_path = os.path.abspath(file_path)
+
+
     if len(suitable_section) >= 1:
         with open(file_path, 'w') as f:
             children = {}
