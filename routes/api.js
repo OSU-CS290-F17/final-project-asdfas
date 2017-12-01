@@ -23,33 +23,27 @@ courses = {
 };
 router.get('/:subject_code/:course_code', function(req, res, next) {
   var requestedCourse = req.params.subject_code.toLowerCase() + req.params.course_code.toLowerCase();
-  // var out = classRetriever.getClassJSON(req.params.subject_code.toLowerCase(), req.params.course_code.toLowerCase());
   var subjectCode = req.params.subject_code.toLowerCase();
   var courseNum = req.params.course_code.toLowerCase();
 
-  var PythonShell = require('python-shell');
   var fs = require('fs');
-    var options = {
-        mode: "text",
-        args: [subjectCode, courseNum, 'W18']
-    };
-    var parsedData = "Test pls ignore";
-    PythonShell.run('web_scraping/soup_attempt.py', options, function(results){
-        fs.readFile('web_scraping/data/'+subjectCode+courseNum+"_W18.json", 'utf8', function (err, data) {
+    var exec = require('child_process').exec;
+    exec('python3 web_scraping/soup_attempt.py ' + subjectCode + ' ' + courseNum + ' W18', function(err, stdout, stderr) {
+      console.log(stdout);
+        fs.readFile('web_scraping/data/'+subjectCode.toUpperCase()+courseNum+"_W18.json", 'utf8', function (err, data) {
             if (err) {
               res.statusCode = 404;
-              // res.header("Content-Type", 'application/json');
+              res.header("Content-Type", 'text/plain');
               res.send("Course not found");
             }
             else {
               res.statusCode = 200;
               parsedData = JSON.parse(data);
-              //console.log(JSON.stringify(parsedData));
               res.header("Content-Type", 'application/json');
               res.send(JSON.stringify(parsedData, null, 2));
             }
         });
-    });  
+    });
 });
 
 module.exports = router;
