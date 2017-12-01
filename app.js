@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
+var indexData = require('./dummyIndex');
+
 
 var api = require('./routes/api');
 var scheduler = require('./routes/scheduler');
@@ -24,7 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', api);
 app.use('/schedules', scheduler);
 app.get('/', function(req, res, next) {
-  res.render('index');
+  res.render('index', {classSet: indexData});
 });
 
 app.get('/edit', function(req, res, next) {
