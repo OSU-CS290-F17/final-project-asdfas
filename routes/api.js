@@ -42,6 +42,7 @@ router.get('/:subject_code/:course_code', function(req, res, next) {
               res.send("Course not found");
             }
             else {
+              res.statusCode = 200;
               parsedData = JSON.parse(data);
               //console.log(JSON.stringify(parsedData));
               res.header("Content-Type", 'application/json');

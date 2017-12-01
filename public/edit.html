@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>OSU Scheduler</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/application.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <script src="dist/bundle.js" defer></script>
   </head>
 
   <body>
@@ -21,106 +23,110 @@
         </ul>
       </div>
     </header>
-    <main>
-      <div class="courses-container">
-        <h2>Courses</h2>
-        <div class="add-course-container">
-          <label for="subject-input" class="input-label">Subject</label>
-          <input type="text" name="subject-input" class="subject-input">
+    <div class="wrapper">
+      <main>
+        <div class="top-boxes">
+          <div class="courses-container">
+            <h2>Courses</h2>
+            <div class="add-course-container">
+              <label for="subject-input" class="input-label">Subject</label>
+              <input type="text" name="subject-input" class="subject-input">
 
-          <label for="course-input" class="input-label">Course</label>
-          <input type="number" name="course-input" class="course-input">
+              <label for="course-input" class="input-label">Course</label>
+              <input type="number" name="course-input" class="course-input">
 
-          <button type="button" class="add-course-button">Add</button>
-        </div>
+              <button type="button" class="add-course-button">Add</button>
+            </div>
 
-        <div class="added-courses-container">
-          <div class="added-course">
-            <span class="course-subject">CS</span>
-            <span class="course-number">290</span>
+            <div class="added-courses-container">
+              <div class="added-course">
+                <span class="course-subject">CS</span>
+                <span class="course-number">290</span>
+              </div>
+
+              <div class="added-course">
+                <span class="course-subject">WR</span>
+                <span class="course-number">214</span>
+              </div>
+            </div>
           </div>
 
-          <div class="added-course">
-            <span class="course-subject">WR</span>
-            <span class="course-number">214</span>
-          </div>
-        </div>
-      </div>
+          <div class="breaks-container">
+            <h2>Breaks</h2>
+            <div class="add-break-container">
+              <label for="name-input" class="input-label">Name</label>
+              <input type="text" name="name-input" class="name-input">
 
-      <div class="breaks-container">
-        <h2>Breaks</h2>
-        <div class="add-break-container">
-          <label for="name-input" class="input-label">Name</label>
-          <input type="text" name="name-input" class="name-input">
+              <label for="length-input" class="input-label">Length</label>
+              <input type="number" name="length-input" class="length-input">minutes
 
-          <label for="length-input" class="input-label">Length</label>
-          <input type="number" name="length-input" class="length-input">minutes
+              <div class="break-times">
+                <label for="start-time-input" class="input-label">Start time</label>
+                <input type="time" name="start-time-input" class="start-time-input">
 
-          <div class="break-times">
-            <label for="start-time-input" class="input-label">Start time</label>
-            <input type="time" name="start-time-input" class="start-time-input">
+                <label for="end-time-input" class="input-label">End time</label>
+                <input type="time" name="end-time-input" class="end-time-input">
 
-            <label for="end-time-input" class="input-label">End time</label>
-            <input type="time" name="end-time-input" class="end-time-input">
+                <button type="button" class="add-break-button">Add</button>
+              </div>
 
-            <button type="button" class="add-break-button">Add</button>
-          </div>
+            </div>
 
-        </div>
+            <table>
+              <tr>
+                <th>Name</th>
+                <th>Length (in minutes)</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+              </tr>
+              <tr class="added-break">
+                <td class="break-name">Breakfast</td>
+                <td class="break-length">30</td>
+                <td class="break-start-time">08:00 AM</td>
+                <td class="break-end-time">09:00 AM</td>
+              </tr>
+              <tr class="added-break">
+                <td class="break-name">Lunch</td>
+                <td class="break-length">45</td>
+                <td class="break-start-time">11:30 AM</td>
+                <td class="break-end-time">03:00 PM</td>
+              </tr>
+            </table>
 
-        <table>
-          <tr>
-            <th>Name</th>
-            <th>Length (in minutes)</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-          </tr>
-          <tr class="added-break">
-            <td class="break-name">Breakfast</td>
-            <td class="break-length">30</td>
-            <td class="break-start-time">08:00 AM</td>
-            <td class="break-end-time">09:00 AM</td>
-          </tr>
-          <tr class="added-break">
-            <td class="break-name">Lunch</td>
-            <td class="break-length">45</td>
-            <td class="break-start-time">11:30 AM</td>
-            <td class="break-end-time">03:00 PM</td>
-          </tr>
-        </table>
+            <!-- <div class="added-breaks-container">
+              <div class="added-break">
+                <span class="break-name">Breakfast</span>
+                <span class="break-length">30</span> minutes
+                <span class="break-start-time">08:00 AM</span> -
+                <span class="break-end-time">09:00 AM</span>
+              </div>
 
-        <!-- <div class="added-breaks-container">
-          <div class="added-break">
-            <span class="break-name">Breakfast</span>
-            <span class="break-length">30</span> minutes
-            <span class="break-start-time">08:00 AM</span> -
-            <span class="break-end-time">09:00 AM</span>
-          </div>
-
-          <div class="added-break">
-            <span class="break-name">Lunch</span>
-            <span class="break-length">45</span> minutes
-            <span class="break-start-time">11:30 AM</span> -
-            <span class="break-end-time">03:00 PM</span>
-          </div>
-        </div> -->
-      </div>
-
-      <div class="schedules-container">
-        <div class="add-schedule-container">
-          <h2>Schedules</h2>
-          <button type="button" id="generate-schedules-button">Generate</button>
-        </div>
-        <div class="generated-schedules">
-          <div class="generated-schedule">
-            Example schedule 1
-          </div>
-
-          <div class="generated-schedule">
-            Example schedule 2
+              <div class="added-break">
+                <span class="break-name">Lunch</span>
+                <span class="break-length">45</span> minutes
+                <span class="break-start-time">11:30 AM</span> -
+                <span class="break-end-time">03:00 PM</span>
+              </div>
+            </div> -->
           </div>
         </div>
-      </div>
-    </main>
+
+        <div class="schedules-container">
+          <div class="add-schedule-container">
+            <h2>Schedules</h2>
+            <button type="button" id="generate-schedules-button">Generate</button>
+          </div>
+          <div class="generated-schedules">
+            <div class="generated-schedule">
+              Example schedule 1
+            </div>
+
+            <div class="generated-schedule">
+              Example schedule 2
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   </body>
 </html>

@@ -2,28 +2,42 @@ body {
   display: block;
 }
 
-main {
-  width: auto;
-}
-
 h2 {
   font-size: 40px;
   margin: 10px;
 }
 
-.courses-container {
-  position: absolute;
-  right: 50%;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 85%;
+}
+
+.top-boxes {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .courses-container, .breaks-container {
   border: 1px solid black;
   margin: 20px;
-  min-width: 400px;
-  width: 40%;
+  width: 100%;
   min-height: 340px;
   text-align: center;
   background-color: white;
+}
+
+.courses-container {
+  margin-left: 0;
+  float: left;
 }
 
 .courses-container input {
@@ -36,18 +50,13 @@ h2 {
   margin-bottom: 10px;
 }
 
-// .added-courses-container {
-//   height: 182px;
-//   border: 1px solid black;
-// }
-//
 .added-course {
-  padding: 5px
+  padding: 5px;
 }
 
 .breaks-container {
-  position: absolute;
-  left: 50%;
+  margin-right: 0;
+  float: right;
 }
 
 .courses-container label, .breaks-container label {
@@ -67,21 +76,24 @@ h2 {
 }
 
 .breaks-container table {
-  width: 75%;
-  margin: auto;
+  margin: 10px;
+  display: flex;
+  align-self: center;
+  justify-content: center;
   padding: 10px;
   border: 1px solid black;
 }
 
+th, td {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
 .schedules-container {
-  position: relative;
-  top: 400px;
-  margin: auto;
-  min-width: 600px;
-  width: 82%;
   text-align: center;
   border: 1px solid black;
-  min-height: 250px;
+  width: 100%;
+  padding: 0;
   background-color: white;
 }
 
