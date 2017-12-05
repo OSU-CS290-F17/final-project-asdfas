@@ -17,6 +17,7 @@
     "express-handlebars": "^3.0.0",
     "handlebars": "^4.0.11",
     "handlebars-loader": "^1.6.0",
+    "mongodb": "^3.0.0-rc0",
     "node-sass": "^4.7.2",
     "python-shell": "^0.4.0",
     "serve-favicon": "~2.4.5"
