@@ -8,4 +8,4 @@ var data = {
 
 console.log('initial data:', data);
 
-var scheduler = new Scheduler(data);
+var scheduler = new Scheduler({});

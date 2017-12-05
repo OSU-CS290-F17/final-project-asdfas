@@ -1,4 +1,9 @@
-import createSchedules from "./scheduleGenerator";
+import ScheduleGenerator from "./scheduleGenerator";
+console.log(ScheduleGenerator);
+let Generator = new ScheduleGenerator();
+var courseTemplate = require('../../views/partials/course.handlebars');
+var schedulesTable = require('../../views/partials/schedulesTable.handlebars');
+var scheduleView = require('../../views/partials/scheduleView.handlebars');
 import Schedule from './schedule';
 import breakGenerator from './breakGenerator';
 
@@ -8,9 +13,9 @@ class Scheduler {
     // data should be a js object containing all values needed to initialize the application
     // identify elements for buttons and call corresponding functions on them
     // initialize all other variables
-    this.courses = data.courses;
-    this.breaks = data.breaks;
-    this.schedules = data.schedules;
+    this.courses = data.courses || [];
+    this.breaks = data.breaks || [];
+    this.schedules = data.schedules || [];
 
     this.handleAddBreakClick = this.handleAddBreakClick.bind(this);
     this.handleAddCourseClick = this.handleAddCourseClick.bind(this);
@@ -32,6 +37,8 @@ class Scheduler {
 
     var saveButton = document.getElementById('generate-schedules-button');
     saveButton.addEventListener('click', this.handleSaveClick);
+    let generateSchedulesButton = document.querySelector('#generate-schedules-button');
+    generateSchedulesButton.addEventListener('click', this.handleCreateSchedulesClick);
   }
 
   // handle[x] functions should be passed directly to event listeners
@@ -66,7 +73,6 @@ class Scheduler {
             subject: subject,
             course: course
           };
-          var courseTemplate = require('../../views/partials/course.handlebars');
           var courseHTML = courseTemplate(courseContext);
           document.querySelector('.added-courses-container').insertAdjacentHTML('beforeend', courseHTML);
           document.querySelector('.subject-input').value = '';
@@ -161,10 +167,38 @@ class Scheduler {
 
   // call createSchedules with courses and breaks
   handleCreateSchedulesClick = (event) => {
-    this.schedules = createSchedules(this.courses, this.breaks).map(schedule => new Schedule(schedule));
-
+    this.schedules = Generator.createSchedules(this.courses, this.breaks);
+    let schedulesDiv = document.querySelector('div.generated-schedules');
+    let schedulesData = {
+      schedules: this.schedules
+    }
+    let schedulesTableHtml = schedulesTable(schedulesData);
+    schedulesDiv.insertAdjacentHTML('beforeend', schedulesTableHtml);
+    schedulesDiv.addEventListener('click', this.handleViewClassLink);
   }
 
+  handleViewClassLink = (event) => {
+    if (event.target.classList.contains('view-schedule-link')) {
+      let id = parseInt(event.target.id.split('-').pop());
+      // console.log(id);
+      // let parsedSchedules = this.schedules.map(schedule => {
+      //   let newSchedule = Object.values(schedule)[0]
+      //   newSchedule["name"] = Object.keys(schedule)[0];
+      //   newSchedule["startTime"] = newSchedule.time_range.split('-')[0];
+      //   return newSchedule;
+      // });
+      let targetSchedule = this.schedules[id - 1];
+      let parsedSchedule = targetSchedule.map((classObj) => {
+        console.log(classObj);
+      });
+      // let scheduleViewData = {
+      //   "days": [
+      //     parsedSchedules.filter((schedule) => schedule.days.includes('M'))
+      //   ]
+      // }
+      let scheduleViewHtml = null;
+    }
+  }
   // post form data to server
   handleSaveClick = (event) => {
 

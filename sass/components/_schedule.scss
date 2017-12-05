@@ -1,5 +1,5 @@
 // local vars
-$schedule-height: 600px;
+$schedule-height: 720px;
 $schedule-width: 720px;
 $times-width: 120px;
 $days-width: $schedule-width - $times-width;
@@ -11,17 +11,22 @@ $hour-height: $schedule-height / 12;
   Use l-[length] where length is the time in hours of the length of the class. 1.5 hours is written as l-15, for example.
 */
 @for $i from 8 through 21 {
-  .t-#{$i} {
+  .t-#{$i * 100} {
     top: $hour-height * ($i - 8);
     background-color: mix(purple, red, 4% * $i);
   }
 }
-@for $j from 1 through 6 {
+// @for $j from 1 through 6 {
+//   .l-#{$j} {
+//     height: ($hour-height * $j);
+//   }
+//   .l-#{$j}5 {
+//     height: (($hour-height * $j) + $hour-height / 2);
+//   }
+// }
+@each $j in 50 120 150 220 250 320 350 420 450 {
   .l-#{$j} {
-    height: ($hour-height * $j);
-  }
-  .l-#{$j}5 {
-    height: (($hour-height * $j) + $hour-height / 2);
+    height: $j + "px";
   }
 }
 .class {
@@ -63,5 +68,15 @@ $hour-height: $schedule-height / 12;
   padding: 5px;
   h3, p {
     margin: 0px;
+  }
+}
+
+.schedule-view-modal {
+  display: none;
+  &.active {
+    display: block;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
