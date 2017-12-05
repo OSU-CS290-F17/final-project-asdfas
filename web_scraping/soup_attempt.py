@@ -65,7 +65,7 @@ if (not error):
             if (int(wanted_cells[9]) > 0 and (cells[11].strip() == 'Open' or cells[11].strip() == 'open') and cells[6].strip() != "TBA"):
                 suitable_section.append(wanted_cells)
         elif DEBUG:
-            print ("ignoring, term:", wanted_cells[0], wanted_cells[0] == term, "campus:", wanted_cells[7], wanted_cells[7] == "Corv", "avail seats:", wanted_cells[9], "status", cells[11])
+            print ("ignoring section ", wanted_cells[2], " ", "term:", wanted_cells[0], wanted_cells[0] == term, "campus:", wanted_cells[7], wanted_cells[7] == "Corv", "avail seats:", wanted_cells[9], "status", cells[11])
     file_path = "/data/"+ subject_code + course_num + "_" + term + ".json"
     file_path = os.path.dirname(os.path.realpath(__file__)) + file_path
 
@@ -77,7 +77,6 @@ if (not error):
             children = {}
             for row in suitable_section:
                 date_tokens = row[5].split()
-                print("Token: ", date_tokens)
                 days = date_tokens[0]
                 time_range = date_tokens[1]
                 class_start_time = 0
