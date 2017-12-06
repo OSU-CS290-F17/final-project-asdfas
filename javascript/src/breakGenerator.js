@@ -29,9 +29,6 @@ function breakGenerator(name, length, startTime, endTime) {
   else {
     numBreaks = Math.trunc((endTime - startTime) * 2 - (length / 60));
   }
-  // 'startTime': '12'
-  // 'endTime': '14'
-  // 'length': '30'
   var breakObj = {};
   breakObj[name] = {};
   breakObj[name]['sections'] = {};

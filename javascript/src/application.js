@@ -6,6 +6,6 @@ var data = {
   'schedules': []
 };
 
-console.log('initial data: ', JSON.stringify(data));
+console.log('initial data:', data);
 
 var scheduler = new Scheduler(data);

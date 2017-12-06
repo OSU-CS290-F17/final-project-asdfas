@@ -61,7 +61,6 @@ class Scheduler {
           var newCourse = {};
           newCourse[fullCourse] = sections;
           self.courses.push(newCourse);
-          // console.log('courses after add: ', JSON.stringify(self.courses));
           console.log('courses after add: ', self.courses);
           var courseContext = {
             subject: subject,
@@ -136,7 +135,6 @@ class Scheduler {
         endTime: endTime12
       };
       this.breaks.push(breakGenerator(name, length, startTime, endTime));
-      // console.log('breaks after add: ', JSON.stringify(this.breaks));
       console.log('breaks after add: ', this.breaks);
       var breakTemplate = require('../../views/partials/break.handlebars');
       var breakHTML = breakTemplate(breakContext);
