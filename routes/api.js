@@ -12,7 +12,7 @@ var mongoDBName = "cs290_gillens" //process.env.MONGO_DB;
 
 var mongoURL = 'mongodb://' + mongoUser + ':' + mongoPassword +
   '@' + mongoHost + ':' + mongoPort + '/' + mongoDBName;
-console.log(mongoURL);
+// console.log(mongoURL);
 
 var mongoConnection = null;
 
@@ -92,21 +92,6 @@ router.get('/:subject_code/:course_code', function (req, res, next) {
       });
     }
   });
-});
-
-router.post('/saveSchedule', function(req, res) {
-	var scheduleName = req.body.scheduleName;
-	//if scheduleName in DB
-	//	update
-	//if not in DB
-	//	insert
-	res.statusCode = 200;
-	res.header("Content-Type", 'text/plain');
-	res.send('POST, nice job');
-});
-
-router.post('/removeSchedule', function(req, res) {
-
 });
 
 MongoClient.connect(mongoURL, function (err, connection) {
