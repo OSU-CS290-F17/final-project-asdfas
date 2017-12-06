@@ -14,9 +14,12 @@ class ScheduleGenerator {
     if (course1_days.split('').map((day) => course2_days.includes(day)).includes(true)) { // check if course1 and 2 occur on at least one of the same days
       let course1_times = course1.time_range.split("-").map((time) => parseInt(time));
       let course2_times = course2.time_range.split("-").map((time) => parseInt(time));
-      if (course1_times[0] <= course2_times[0] && course2_times[0] < course1_times[1]
-          || course2_times[0] <= course1_times[0] && course1_times[0] < course2_times[1]) {
-            return true;
+      // if (course1_times[0] <= course2_times[0] && course2_times[0] < course1_times[1]
+      //     || course2_times[0] <= course1_times[0] && course1_times[0] < course2_times[1]) {
+      //       return true;
+      if (course2_times[1] <= course1_times[0]
+          || course2_times[0] >= course1_times[1]) {
+        return true;
       } else {
         return false
       }
@@ -26,14 +29,15 @@ class ScheduleGenerator {
   } 
 
   hasConflict(section, schedule) {
+    let hasConflict = false
     Object.values(schedule).forEach((scheduleClass) => {
       if (this.hasTimeOverlap(section, scheduleClass)) {
-        console.log("returning true");
-        return true;
+        console.log("returning true", schedule, section);
+        hasConflict = true;
       }
     });
-    console.log("returning false");
-    return false;
+    console.log("returning false", schedule, section);
+    return hasConflict;
   }
   scheduleRecurs = (index) => {
     let courseName = Object.keys(this.all[index])[0];
@@ -49,24 +53,26 @@ class ScheduleGenerator {
         let schedules = this.scheduleRecurs(index + 1);
         let filteredSchedules = []
         console.log("==schedules before filter", schedules);
-        schedules = schedules.forEach((schedule => {
-          if (!(this.hasConflict(section, schedule))) filteredSchedules.push(schedule); 
-        }));
-        console.log("==schedules after filter", schedules);
+        // schedules = schedules.filter((schedule => {
+        //   !(this.hasConflict(section, schedule));
+        // }));
+        schedules.forEach((schedule) => {
+          if (this.hasConflict(section, schedule)) {
+            console.log("adding schedule", schedule);
+            filteredSchedules.push(schedule)
+          };
+        })
+        console.log("==schedules after filter", filteredSchedules);
         filteredSchedules.forEach((schedule, i) => {
-          // Object.values(schedule).forEach((scheduleClass) => {
-          //   if (this.hasTimeOverlap(section, scheduleClass)) {
-          //     schedules.splice(i, 1);
-          //   }
-          // });
           schedule[courseName] = section;
         })
         allSchedules = allSchedules.concat(filteredSchedules); 
       })
-      console.log("==allschedules", allSchedules);
+      // console.log("==allschedules", allSchedules);
       return allSchedules
     }
   }
+
 
   createSchedules = (courses, breaks) => {
     console.log(courses);

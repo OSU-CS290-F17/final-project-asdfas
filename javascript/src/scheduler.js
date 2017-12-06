@@ -39,6 +39,9 @@ class Scheduler {
     saveButton.addEventListener('click', this.handleSaveClick);
     let generateSchedulesButton = document.querySelector('#generate-schedules-button');
     generateSchedulesButton.addEventListener('click', this.handleCreateSchedulesClick);
+
+    let closeModalButton = document.querySelector('.modal-close-button');
+    closeModalButton.addEventListener('click', this.handleCloseModalClick)
   }
 
   // handle[x] functions should be passed directly to event listeners
@@ -173,10 +176,22 @@ class Scheduler {
       schedules: this.schedules
     }
     let schedulesTableHtml = schedulesTable(schedulesData);
+    while(schedulesDiv.firstChild) {
+      schedulesDiv.removeChild(schedulesDiv.firstChild);
+    }
     schedulesDiv.insertAdjacentHTML('beforeend', schedulesTableHtml);
     schedulesDiv.addEventListener('click', this.handleViewClassLink);
   }
 
+  // clear modal data and remove active class
+  handleCloseModalClick = (event) => {
+    let viewRow = document.querySelector('.view-row')
+    while(viewRow.firstChild) {
+      viewRow.removeChild(viewRow.firstChild);
+    }
+    document.querySelector('.schedule-view-modal').classList.remove('active');
+
+  }
   handleViewClassLink = (event) => {
     if (event.target.classList.contains('view-schedule-link')) {
       let id = parseInt(event.target.id.split('-').pop());
@@ -208,7 +223,8 @@ class Scheduler {
           //   "courses": parsedSchedule.filter(course => course.days.includes('M'))
           // }
       let scheduleViewHtml = scheduleView(scheduleViewData);
-      document.querySelector('.schedule-view-modal').insertAdjacentHTML('beforeend', scheduleViewHtml);
+      let viewRow = document.querySelector('.schedule-view-modal').querySelector('.view-row');
+      viewRow.insertAdjacentHTML('beforeend', scheduleViewHtml);
       document.querySelector('.schedule-view-modal').classList.add('active')
     }
   }
