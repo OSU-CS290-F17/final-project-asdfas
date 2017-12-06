@@ -26,7 +26,7 @@ $hour-height: $schedule-height / 12;
 // }
 @each $j in 50 120 150 220 250 320 350 420 450 {
   .l-#{$j} {
-    height: $j + "px";
+    height: $j + px;
   }
 }
 .class {
@@ -74,6 +74,7 @@ $hour-height: $schedule-height / 12;
 .schedule-view-modal {
   display: none;
   &.active {
+    background-color: white;
     display: block;
     position: absolute;
     margin-left: auto;

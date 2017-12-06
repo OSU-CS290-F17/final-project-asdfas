@@ -187,16 +187,29 @@ class Scheduler {
       //   newSchedule["startTime"] = newSchedule.time_range.split('-')[0];
       //   return newSchedule;
       // });
-      let targetSchedule = this.schedules[id - 1];
-      let parsedSchedule = targetSchedule.map((classObj) => {
-        console.log(classObj);
+      let targetSchedule = this.schedules[id];
+      let parsedSchedule = Object.keys(targetSchedule).map((key) => {
+        let result = targetSchedule[key]
+        result["name"] = key;
+        return result;
       });
-      // let scheduleViewData = {
-      //   "days": [
-      //     parsedSchedules.filter((schedule) => schedule.days.includes('M'))
-      //   ]
-      // }
-      let scheduleViewHtml = null;
+      let courses = "MTWRF".split('').map((day) => {
+        return {"courses": parsedSchedule.filter(course => course.days.includes(day))}
+      })
+      console.log(courses);
+      let scheduleViewData = {
+        "days": courses
+        
+      }
+          // "MTWRF".split('').map((day) => {
+          //  return {"courses": parsedSchedule.filter(course => course.days.includes(day))}
+          // })
+          // {
+          //   "courses": parsedSchedule.filter(course => course.days.includes('M'))
+          // }
+      let scheduleViewHtml = scheduleView(scheduleViewData);
+      document.querySelector('.schedule-view-modal').insertAdjacentHTML('beforeend', scheduleViewHtml);
+      document.querySelector('.schedule-view-modal').classList.add('active')
     }
   }
   // post form data to server
