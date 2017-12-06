@@ -8,6 +8,6 @@ var data = {
 
 console.log('initial data:', data);
 
-if (document.querySelector('main.edit')) {
+if (document.querySelector('main#edit')) {
   var scheduler = new Scheduler({});
 }
