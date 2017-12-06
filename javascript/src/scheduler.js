@@ -61,13 +61,16 @@ class Scheduler {
       request.open('GET', requestURL);
 
       request.addEventListener('load', function(event) {
-        
+        var loadButton = document.querySelector('.load');
         var addButton = document.querySelector('.add-course-button');
-        addButton.classList.add('disabled');
-        
+        addButton.classList.add('hidden');
+        loadButton.classList.remove('hidden');
+
         if(event.target.status !== 200) {
           var message = event.target.response;
           alert('Error adding course: ' + message);
+          addButton.classList.remove('hidden');
+          loadButton.classList.add('hidden');
         }
         else {
           var fullCourse = (subject + course).toLowerCase();
@@ -84,7 +87,10 @@ class Scheduler {
           document.querySelector('.added-courses-container').insertAdjacentHTML('beforeend', courseHTML);
           document.querySelector('.subject-input').value = '';
           document.querySelector('.course-input').value = '';
+          loadButton.classList.add('hidden');
+          addButton.classList.remove('hidden');
         }
+        
       });
       request.send();
     }

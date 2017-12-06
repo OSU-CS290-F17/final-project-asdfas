@@ -2,16 +2,19 @@
   {
     "name": "8 AM's Baby",
     "credits": "16",
-    "term": "Winter"
+    "term": "Winter",
+    "link": "/edit"
   },
   {
     "name": "Sleeping In",
     "credits": "12",
-    "term": "Winter"
+    "term": "Winter",
+    "link": "/edit"
   },
   {
     "name": "Why do I hate myself",
     "credits": "21",
-    "term": "Winter"
+    "term": "Winter",
+    "link": "/edit"
   }
 ]
