@@ -8,6 +8,8 @@ Use command `npm start` to start a development server.
 
 Install the current python version, and then run "pip install beautifulsoup4" if you are on windows. Linux--use your package manager to install "beautifulsoup4," if applicable.
 
+The command calling a python script in routes/api.js must be changed if the system's python command is not "python3". (On Windows, it seems to be just python by defualt)
+
 ## Commands
 
 - `npm run start` starts the server
