@@ -61,6 +61,10 @@ class Scheduler {
       request.open('GET', requestURL);
 
       request.addEventListener('load', function(event) {
+        
+        var addButton = document.querySelector('.add-course-button');
+        addButton.classList.add('disabled');
+        
         if(event.target.status !== 200) {
           var message = event.target.response;
           alert('Error adding course: ' + message);
