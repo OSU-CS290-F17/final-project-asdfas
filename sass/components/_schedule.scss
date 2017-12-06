@@ -14,7 +14,8 @@ $hour-height: 60px;
 @for $i from 8 through 21 {
   .t-#{$i * 100} {
     top: $hour-height * ($i - 8);
-    background-color: mix(purple, red, 4% * $i);
+    // background-color: mix(purple, red, 4% * $i);
+    background-color: hsl($i * 20, 75%, 50%);
   }
 }
 // @for $j from 1 through 6 {
