@@ -43,6 +43,8 @@ function breakGenerator(name, length, startTime, endTime) {
     rangeStart = hoursToString(rangeStart);
     rangeEnd = hoursToString(rangeEnd);
     breakObj[name]['sections'][j]['time_range'] = rangeStart + '-' + rangeEnd;
+    breakObj[name]['sections'][j]['time'] = rangeStart;
+    breakObj[name]['sections'][j]['days'] = "MTWRF";
   }
   return breakObj;
 }

@@ -141,7 +141,8 @@ class Scheduler {
         name: name,
         length: length,
         startTime: startTime12,
-        endTime: endTime12
+        endTime: endTime12,
+        days: "MTWRF"
       };
       this.breaks.push(breakGenerator(name, length, startTime, endTime));
       console.log('breaks after add: ', this.breaks);
