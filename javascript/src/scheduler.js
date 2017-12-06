@@ -1,5 +1,6 @@
 import createSchedules from "./scheduleGenerator";
 import Schedule from './schedule';
+import breakGenerator from './breakGenerator';
 
 class Scheduler {
 
@@ -19,8 +20,18 @@ class Scheduler {
     var addCourseButton = document.querySelector('.add-course-button');
     addCourseButton.addEventListener('click', this.handleAddCourseClick);
 
+    document.querySelector('.added-courses-container').addEventListener('click', this.handleRemoveCourseClick);
+
     var addBreakButton = document.querySelector('.add-break-button');
     addBreakButton.addEventListener('click', this.handleAddBreakClick);
+
+    document.querySelector('.breaks-container table').addEventListener('click', this.handleRemoveBreakClick);
+
+    var generateButton = document.getElementById('generate-schedules-button');
+    generateButton.addEventListener('click', this.handleCreateSchedulesClick);
+
+    var saveButton = document.getElementById('generate-schedules-button');
+    saveButton.addEventListener('click', this.handleSaveClick);
   }
 
   // handle[x] functions should be passed directly to event listeners
@@ -50,7 +61,7 @@ class Scheduler {
           var newCourse = {};
           newCourse[fullCourse] = sections;
           self.courses.push(newCourse);
-          console.log('courses after add: ', JSON.stringify(self.courses));
+          console.log('courses after add: ', self.courses);
           var courseContext = {
             subject: subject,
             course: course
@@ -66,8 +77,46 @@ class Scheduler {
     }
   }
 
+  handleRemoveCourseClick = (event) => {
+    if(!event.target.classList.contains('remove-course-button')) {
+      return;
+    }
+    console.log("handling remove course click");
+    var courseHTML = event.target.parentNode;
+    var subject = courseHTML.querySelector('.course-subject').innerHTML;
+    var course = courseHTML.querySelector('.course-number').innerHTML;
+    var idx = this.courses.indexOf(subject+course);
+    this.courses.splice(idx, 1);
+    console.log('courses after remove: ', this.courses);
+    courseHTML.remove();
+  }
+
   // generate new break based on form data and add to breaks
   handleAddBreakClick = (event) => {
+    // converts to 12-hour time for display
+    function time12(hours) {
+      var str;
+      if(hours < 12) {
+        str = Math.trunc(hours) + ':';
+      }
+      else {
+        str = Math.trunc(hours) - 12 + ':';
+      }
+      if(hours % 1) {
+        str += (hours % 1 * 60).toString();
+      }
+      else {
+        str += '00';
+      }
+      if(hours < 12) {
+        str += ' AM';
+      }
+      else {
+        str += ' PM';
+      }
+      return str;
+    }
+
     console.log("handling add break click");
     var name = document.querySelector('.name-input').value;
     var length = document.querySelector('.length-input').value;
@@ -77,14 +126,16 @@ class Scheduler {
       alert('Please enter valid name, length, start time, and end time');
     }
     else {
+      var startTime12 = time12(startTime);
+      var endTime12 = time12(endTime);
       var breakContext = {
         name: name,
         length: length,
-        startTime: startTime,
-        endTime: endTime
+        startTime: startTime12,
+        endTime: endTime12
       };
-      this.breaks.push(breakContext);
-      console.log('breaks after add: ', JSON.stringify(this.breaks));
+      this.breaks.push(breakGenerator(name, length, startTime, endTime));
+      console.log('breaks after add: ', this.breaks);
       var breakTemplate = require('../../views/partials/break.handlebars');
       var breakHTML = breakTemplate(breakContext);
       document.querySelector('.top-boxes table tbody').insertAdjacentHTML('beforeend', breakHTML);
@@ -93,6 +144,19 @@ class Scheduler {
       document.querySelector('.start-time-input').value = '';
       document.querySelector('.end-time-input').value = '';
     }
+  }
+
+  handleRemoveBreakClick = (event) => {
+    if(!event.target.classList.contains('remove-break-button')) {
+      return;
+    }
+    console.log("handling remove break click");
+    var name = event.target.parentNode.innerHTML;
+    var breakHTML = event.target.parentNode.parentNode;
+    var idx = this.breaks.indexOf(name);
+    this.breaks.splice(idx, 1);
+    console.log('breaks after remove: ', this.breaks);
+    breakHTML.remove();
   }
 
   // call createSchedules with courses and breaks

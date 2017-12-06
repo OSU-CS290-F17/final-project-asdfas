@@ -125,6 +125,7 @@ button[type="button"] {
   width: 75px;
   height: 35px;
   align-self: center;
+  margin: 10px;
 }
 
 button[type="button"]:hover {
@@ -135,4 +136,13 @@ button[type="button"]:hover {
 
 button[type="button"]:focus {
   outline: 0;
+}
+
+.added-courses-container button, .breaks-container table button {
+  margin: 0;
+  padding: 0;
+  border: 1px solid black;
+  color: red;
+  width: 20px;
+  height: 20px;
 }
