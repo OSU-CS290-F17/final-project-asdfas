@@ -1,27 +1,36 @@
 // local vars
-$schedule-height: 600px;
+$schedule-height: 720px;
 $schedule-width: 720px;
 $times-width: 120px;
 $days-width: $schedule-width - $times-width;
 $day-width: $days-width / 5;
-$hour-height: $schedule-height / 12;
+// $hour-height: $schedule-height / 14;
+$hour-height: 60px;
 
 /*
   Use t-[time] to indicate time, where time is the 24 hour time of the class
   Use l-[length] where length is the time in hours of the length of the class. 1.5 hours is written as l-15, for example.
 */
 @for $i from 8 through 21 {
-  .t-#{$i} {
+  .t-#{$i * 100} {
     top: $hour-height * ($i - 8);
-    background-color: mix(purple, red, 4% * $i);
+    // background-color: mix(purple, red, 4% * $i);
+    background-color: hsl($i * 20, 75%, 50%);
   }
 }
-@for $j from 1 through 6 {
+// @for $j from 1 through 6 {
+//   .l-#{$j} {
+//     height: ($hour-height * $j);
+//   }
+//   .l-#{$j}5 {
+//     height: (($hour-height * $j) + $hour-height / 2);
+//   }
+// }
+$lengths: 50 120 150 220 250 320 350 420 450;
+@each $j in $lengths  {
+  $index: index($lengths, $j);
   .l-#{$j} {
-    height: ($hour-height * $j);
-  }
-  .l-#{$j}5 {
-    height: (($hour-height * $j) + $hour-height / 2);
+    height: (30 * $index) + 20 + px;
   }
 }
 .class {
@@ -56,12 +65,53 @@ $hour-height: $schedule-height / 12;
     width: $day-width - 2 * $day-padding;
     height: $schedule-height;
     padding: 0px 5px;
+    position: relative;
   }
 }
 
 .class {
+  position: absolute;
   padding: 5px;
+  width: 100%;
   h3, p {
     margin: 0px;
+  }
+}
+
+.schedule-view-modal {
+  display: none;
+  &.active {
+    background-color: white;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+
+    margin-left: auto;
+    margin-right: auto;
+    // max-width: 1500px;
+    width: 1000px;
+    // min-width: 40 + $schedule-width;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0px 0px 100px 5px black;
+    .button-row { 
+      display: flex;
+      justify-content: flex-end;
+      flex-basis: 100%;
+      padding: 20px;
+    }
+    .view-row {
+      flex-basis: 100%;
+      width: $schedule-width;
+      display: flex;
+      justify-content: center;
+    }
+    .header-row {
+      flex-basis: 100%;
+      display: flex;
+      justify-content: center;
+    }
   }
 }
