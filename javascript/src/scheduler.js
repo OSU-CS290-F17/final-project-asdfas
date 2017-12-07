@@ -91,11 +91,11 @@ class Scheduler {
           document.querySelector('.subject-input').value = '';
           document.querySelector('.course-input').value = '';
         }
-        
+        loadButton.classList.add('hidden');
+      addButton.classList.remove('hidden');
       });
       request.send();
-      loadButton.classList.add('hidden');
-      addButton.classList.remove('hidden');
+      
     }
   }
 
