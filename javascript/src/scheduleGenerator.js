@@ -42,7 +42,7 @@ class ScheduleGenerator {
   scheduleRecurs = (index) => {
     let courseName = Object.keys(this.all[index])[0];
     let course = Object.values(this.all[index])[0];
-    let sections = this.getClassArray(course);
+    let sections = this.getClassArray(course).filter(section => section.type == "Lecture");
     console.log("==coursename", courseName);
     console.log("==index", index);
     if (index == this.all.length - 1) {
