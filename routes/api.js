@@ -68,7 +68,7 @@ router.get('/:subject_code/:course_code', function (req, res, next) {
       }
     }
     if (hoursBetween > 24 || results.length == 0) {
-      exec('python3 web_scraping/soup_attempt.py ' + subjectCode + ' ' + courseNum + ' W18', function (err, stdout, stderr) {
+      exec('python web_scraping/soup_attempt.py ' + subjectCode + ' ' + courseNum + ' W18', function (err, stdout, stderr) {
         console.log("== Searching Ed's files for you class data... ", stdout);
         fs.readFile('web_scraping/data/' + subjectCode + courseNum + "_W18.json", 'utf8', function (err, data) {
           if (err) {
