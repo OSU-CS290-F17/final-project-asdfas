@@ -23,7 +23,7 @@ function breakGenerator(name, length, startTime, endTime, days) {
   console.log('startTime:', startTime);
   console.log('length:', length);
   var numBreaks = 0;
-  for(var i = startTime; i < endTime; i++) {
+  for(var i = startTime; i < endTime; i += 0.5) {
     if((i + length / 60) <= endTime) {
       numBreaks++;
     }
@@ -40,13 +40,13 @@ function breakGenerator(name, length, startTime, endTime, days) {
     var j = i.toString();
     breakObj[name]['sections'][j] = {};
     breakObj[name]['sections'][j]['length_minutes'] = length.toString();
-    var rangeStart = startTime + i;
+    var rangeStart = startTime + i * 0.5;
     var rangeEnd = rangeStart + (length / 60);
     rangeStart = hoursToString(rangeStart);
     rangeEnd = hoursToString(rangeEnd);
     breakObj[name]['sections'][j]['time_range'] = rangeStart + '-' + rangeEnd;
     breakObj[name]['sections'][j]['days'] = days;
-    breakObj[name]['sections'][j]['time'] = rangeStart;
+    breakObj[name]['sections'][j]['time'] = parseInt(rangeStart);
   }
   return breakObj;
 }
