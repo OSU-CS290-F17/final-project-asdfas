@@ -49,6 +49,7 @@ class ScheduleGenerator {
       return (sections.map(section => this.makeSchedule(courseName, section)));
     } else {
       let allSchedules = []
+      sections = sections.filter (section => section.type == "Lecture");
       sections.forEach((section) => {
         let schedules = this.scheduleRecurs(index + 1);
         let filteredSchedules = []
