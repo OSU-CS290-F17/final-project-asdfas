@@ -59,13 +59,23 @@ class Scheduler {
       var request = new XMLHttpRequest();
       var requestURL = 'api/' + subject + '/' + course;
       request.open('GET', requestURL);
+      
+      var loadButton = document.querySelector('.load');
+      var addButton = document.querySelector('.add-course-button');
+      
 
       request.addEventListener('load', function(event) {
+        addButton.classList.add('hidden');
+        loadButton.classList.remove('hidden');
+
         if(event.target.status !== 200) {
           var message = event.target.response;
           alert('Error adding course: ' + message);
+          addButton.classList.remove('hidden');
+          loadButton.classList.add('hidden');
         }
         else {
+         
           var fullCourse = (subject + course).toLowerCase();
           var sections = JSON.parse(event.target.response);
           var newCourse = {};
@@ -81,8 +91,11 @@ class Scheduler {
           document.querySelector('.subject-input').value = '';
           document.querySelector('.course-input').value = '';
         }
+        loadButton.classList.add('hidden');
+      addButton.classList.remove('hidden');
       });
       request.send();
+      
     }
   }
 
