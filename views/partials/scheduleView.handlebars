@@ -1,0 +1,30 @@
+  <div class="week">
+    <ul class="times">
+      <li class="time">8:00am</li>
+      <li class="time">9:00am</li>
+      <li class="time">10:00am</li>
+      <li class="time">11:00am</li>
+      <li class="time">12:00pm</li>
+      <li class="time">1:00pm</li>
+      <li class="time">2:00pm</li>
+      <li class="time">3:00pm</li>
+      <li class="time">4:00pm</li>
+      <li class="time">5:00pm</li>
+      <li class="time">6:00pm</li>
+      <li class="time">7:00pm</li>
+      <li class="time">8:00pm</li>
+      <li class="time">9:00pm</li>
+      <li class="time">10:00pm</li>
+    </ul>
+    <div class="days">
+      {{#each days}}
+        <div class="day">
+          {{#each courses}}
+            <div class="class t-{{time}} l-{{length_minutes}}">
+              <h3>{{name}}</h3>
+            </div>
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
+    </div>

@@ -1,4 +1,9 @@
-import createSchedules from "./scheduleGenerator";
+import ScheduleGenerator from "./scheduleGenerator";
+console.log(ScheduleGenerator);
+let Generator = new ScheduleGenerator();
+var courseTemplate = require('../../views/partials/course.handlebars');
+var schedulesTable = require('../../views/partials/schedulesTable.handlebars');
+var scheduleView = require('../../views/partials/scheduleView.handlebars');
 import Schedule from './schedule';
 import breakGenerator from './breakGenerator';
 
@@ -8,9 +13,9 @@ class Scheduler {
     // data should be a js object containing all values needed to initialize the application
     // identify elements for buttons and call corresponding functions on them
     // initialize all other variables
-    this.courses = data.courses;
-    this.breaks = data.breaks;
-    this.schedules = data.schedules;
+    this.courses = data.courses || [];
+    this.breaks = data.breaks || [];
+    this.schedules = data.schedules || [];
 
     this.handleAddBreakClick = this.handleAddBreakClick.bind(this);
     this.handleAddCourseClick = this.handleAddCourseClick.bind(this);
@@ -30,8 +35,13 @@ class Scheduler {
     var generateButton = document.getElementById('generate-schedules-button');
     generateButton.addEventListener('click', this.handleCreateSchedulesClick);
 
-    var saveButton = document.getElementById('generate-schedules-button');
+    var saveButton = document.getElementById('save-button');
     saveButton.addEventListener('click', this.handleSaveClick);
+    let generateSchedulesButton = document.querySelector('#generate-schedules-button');
+    generateSchedulesButton.addEventListener('click', this.handleCreateSchedulesClick);
+
+    let closeModalButton = document.querySelector('.modal-close-button');
+    closeModalButton.addEventListener('click', this.handleCloseModalClick)
   }
 
   // handle[x] functions should be passed directly to event listeners
@@ -66,7 +76,6 @@ class Scheduler {
             subject: subject,
             course: course
           };
-          var courseTemplate = require('../../views/partials/course.handlebars');
           var courseHTML = courseTemplate(courseContext);
           document.querySelector('.added-courses-container').insertAdjacentHTML('beforeend', courseHTML);
           document.querySelector('.subject-input').value = '';
@@ -132,7 +141,8 @@ class Scheduler {
         name: name,
         length: length,
         startTime: startTime12,
-        endTime: endTime12
+        endTime: endTime12,
+        days: "MTWRF"
       };
       this.breaks.push(breakGenerator(name, length, startTime, endTime));
       console.log('breaks after add: ', this.breaks);
@@ -161,13 +171,72 @@ class Scheduler {
 
   // call createSchedules with courses and breaks
   handleCreateSchedulesClick = (event) => {
-    this.schedules = createSchedules(this.courses, this.breaks).map(schedule => new Schedule(schedule));
-
+    this.schedules = Generator.createSchedules(this.courses, this.breaks);
+    let schedulesDiv = document.querySelector('div.generated-schedules');
+    let schedulesData = {
+      schedules: this.schedules
+    }
+    let schedulesTableHtml = schedulesTable(schedulesData);
+    while(schedulesDiv.firstChild) {
+      schedulesDiv.removeChild(schedulesDiv.firstChild);
+    }
+    schedulesDiv.insertAdjacentHTML('beforeend', schedulesTableHtml);
+    schedulesDiv.addEventListener('click', this.handleViewClassLink);
   }
 
+  // clear modal data and remove active class
+  handleCloseModalClick = (event) => {
+    let viewRow = document.querySelector('.view-row')
+    while(viewRow.firstChild) {
+      viewRow.removeChild(viewRow.firstChild);
+    }
+    document.querySelector('.schedule-view-modal').classList.remove('active');
+
+  }
+  handleViewClassLink = (event) => {
+    if (event.target.classList.contains('view-schedule-link')) {
+      let id = parseInt(event.target.id.split('-').pop());
+      // console.log(id);
+      // let parsedSchedules = this.schedules.map(schedule => {
+      //   let newSchedule = Object.values(schedule)[0]
+      //   newSchedule["name"] = Object.keys(schedule)[0];
+      //   newSchedule["startTime"] = newSchedule.time_range.split('-')[0];
+      //   return newSchedule;
+      // });
+      let targetSchedule = this.schedules[id];
+      let parsedSchedule = Object.keys(targetSchedule).map((key) => {
+        let result = targetSchedule[key]
+        result["name"] = key;
+        return result;
+      });
+      let courses = "MTWRF".split('').map((day) => {
+        return {"courses": parsedSchedule.filter(course => course.days.includes(day))}
+      })
+      console.log(courses);
+      let scheduleViewData = {
+        "days": courses
+        
+      }
+          // "MTWRF".split('').map((day) => {
+          //  return {"courses": parsedSchedule.filter(course => course.days.includes(day))}
+          // })
+          // {
+          //   "courses": parsedSchedule.filter(course => course.days.includes('M'))
+          // }
+      let scheduleViewHtml = scheduleView(scheduleViewData);
+      let viewRow = document.querySelector('.schedule-view-modal').querySelector('.view-row');
+      viewRow.insertAdjacentHTML('beforeend', scheduleViewHtml);
+      document.querySelector('.schedule-view-modal').classList.add('active')
+    }
+  }
   // post form data to server
   handleSaveClick = (event) => {
-
+    console.log("Save button clicked");
+    var data = {"name": "schedule1"};
+    var request = new XMLHttpRequest();
+    request.open('POST', 'http://localhost:3000/schedules/save', true);
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
   }
 }
 
