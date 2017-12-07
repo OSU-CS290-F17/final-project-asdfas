@@ -42,14 +42,13 @@ class ScheduleGenerator {
   scheduleRecurs = (index) => {
     let courseName = Object.keys(this.all[index])[0];
     let course = Object.values(this.all[index])[0];
-    let sections = this.getClassArray(course);
+    let sections = this.getClassArray(course).filter(section => section.type == "Lecture");
     console.log("==coursename", courseName);
     console.log("==index", index);
     if (index == this.all.length - 1) {
       return (sections.map(section => this.makeSchedule(courseName, section)));
     } else {
       let allSchedules = []
-      sections = sections.filter (section => section.type == "Lecture");
       sections.forEach((section) => {
         let schedules = this.scheduleRecurs(index + 1);
         let filteredSchedules = []
