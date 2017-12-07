@@ -26,12 +26,36 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', api);
 app.use('/schedules', scheduler);
 app.get('/', function(req, res, next) {
+	var request = new XMLHttpRequest();
+    var requestURL = '/schedules/all';
+    request.open('GET', requestURL);
+   	request.addEventListener('load', function(event) {
+
+        if(event.target.status !== 200) {
+          var message = event.target.response;
+          alert(message);
+        }
+        else {
+         	var indexData = JSON.parse(event.target.response);
+          
+          };
+         
+        };
+    request.send();
+     
+      
+      
+    
+  
   res.render('index', {classSet: indexData});
 });
 
 app.get('/edit', function(req, res, next) {
   res.render('edit');
 });
+// app.get('/edit/:id', function(req, res, next) {
+//   res.render('edit');
+// });
 
 
 module.exports = app;
