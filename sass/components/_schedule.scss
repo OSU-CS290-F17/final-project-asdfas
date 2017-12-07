@@ -17,6 +17,12 @@ $hour-height: 60px;
     // background-color: mix(purple, red, 4% * $i);
     background-color: hsl($i * 20, 75%, 50%);
   }
+
+  .t-#{$i * 100 + 30} {
+    top: $hour-height * ($i - 8) + 30;
+    // background-color: mix(purple, red, 4% * $i);
+    background-color: hsl($i + 30 * 20, 75%, 50%);
+  }
 }
 // @for $j from 1 through 6 {
 //   .l-#{$j} {

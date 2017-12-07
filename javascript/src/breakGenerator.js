@@ -47,6 +47,7 @@ function breakGenerator(name, length, startTime, endTime, days) {
     breakObj[name]['sections'][j]['time_range'] = rangeStart + '-' + rangeEnd;
     breakObj[name]['sections'][j]['days'] = days;
     breakObj[name]['sections'][j]['time'] = parseInt(rangeStart);
+
   }
   return breakObj;
 }
