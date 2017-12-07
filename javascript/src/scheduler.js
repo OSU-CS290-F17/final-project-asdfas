@@ -255,6 +255,11 @@ class Scheduler {
     console.log("courses:", this.courses);
     console.log("breaks:", this.breaks);
     console.log("schedules:", this.schedules);
+    var classSet = {}
+    c//lassSet[courses] = this.courses;
+    // classSet.push( {breaks: this.breaks} );
+    // classSet.push( {schedules: this.schedules} );
+
 
     console.log("Save button clicked");
     var data = {"name": "schedule1"};
