@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var indexData = require('../dummyIndex');
 
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
@@ -37,8 +38,9 @@ router.get('/all', function (req, res) {
     if (err) {
       throw err;
     }
-    console.log(results);
-    res.status(200).header("Content-Type", 'application/json').send({});
+    console.log("Results: ", results);
+    console.log(indexData);
+    res.status(200).header("Content-Type", 'application/json').send(indexData);
   });
 });
 
