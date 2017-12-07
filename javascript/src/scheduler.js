@@ -59,7 +59,7 @@ class Scheduler {
       var request = new XMLHttpRequest();
       var requestURL = 'api/' + subject + '/' + course;
       request.open('GET', requestURL);
-      
+
       var loadButton = document.querySelector('.load');
       var addButton = document.querySelector('.add-course-button');
       addButton.classList.add('hidden');
@@ -74,7 +74,7 @@ class Scheduler {
           loadButton.classList.add('hidden');
         }
         else {
-         
+
           var fullCourse = (subject + course).toLowerCase();
           var sections = JSON.parse(event.target.response);
           var newCourse = {};
@@ -94,7 +94,7 @@ class Scheduler {
       addButton.classList.remove('hidden');
       });
       request.send();
-      
+
     }
   }
 
@@ -117,7 +117,7 @@ class Scheduler {
     // converts to 12-hour time for display
     function time12(hours) {
       var str;
-      if(hours < 12) {
+      if(hours < 13) {
         str = Math.trunc(hours) + ':';
       }
       else {
@@ -149,8 +149,13 @@ class Scheduler {
       days += dayHTML[i].value;
     }
 
-    if(!name || !length || !startTime || !endTime) {
+    if(!name || !length || !startTime || !endTime || !days) {
       alert('Please enter valid name, length, start time, and end time');
+      return;
+    }
+    if(parseInt(startTime) > parseInt(endTime)) {
+      alert('Start time can\'t be later than end time.');
+      return;
     }
     else {
       var startTime12 = time12(startTime);
@@ -192,6 +197,10 @@ class Scheduler {
 
   // call createSchedules with courses and breaks
   handleCreateSchedulesClick = (event) => {
+    if(!this.courses[0]) {
+      alert('Enter at least one course before generating schedules');
+      return;
+    }
     this.schedules = Generator.createSchedules(this.courses, this.breaks);
     let schedulesDiv = document.querySelector('div.generated-schedules');
     let schedulesData = {
@@ -236,7 +245,7 @@ class Scheduler {
       console.log(courses);
       let scheduleViewData = {
         "days": courses
-        
+
       }
           // "MTWRF".split('').map((day) => {
           //  return {"courses": parsedSchedule.filter(course => course.days.includes(day))}
