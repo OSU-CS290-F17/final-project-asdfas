@@ -18,7 +18,8 @@
     "handlebars": "^4.0.11",
     "mongodb": "^2.2.33",
     "node-sass": "^4.7.2",
-    "serve-favicon": "~2.4.5"
+    "serve-favicon": "~2.4.5",
+    "xmlhttprequest": "^1.8.0"
   },
   "description": "a scheduler project for CS 290 at OSU",
   "main": "app.js",

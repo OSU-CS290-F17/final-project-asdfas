@@ -6,6 +6,20 @@ var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
 var indexData = require('./dummyIndex');
 
+var bodyParser = require('body-parser');
+var MongoClient = require('mongodb').MongoClient;
+
+var mongoHost = "classmongo.engr.oregonstate.edu" //process.env.MONGO_HOST;         //
+var mongoPort = process.env.MONGO_PORT || 27017;
+var mongoUser = "cs290_gillens" //process.env.MONGO_USER;
+var mongoPassword = "cs290_gillens" // process.env.MONGO_PASSWORD;
+var mongoDBName = "cs290_gillens" //process.env.MONGO_DB;
+
+var mongoURL = 'mongodb://' + mongoUser + ':' + mongoPassword +
+  '@' + mongoHost + ':' + mongoPort + '/' + mongoDBName;
+// console.log(mongoURL);
+
+var mongoConnection = null;
 
 var api = require('./routes/api');
 var scheduler = require('./routes/scheduler');
@@ -26,28 +40,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', api);
 app.use('/schedules', scheduler);
 app.get('/', function(req, res, next) {
-	var request = new XMLHttpRequest();
-    var requestURL = '/schedules/all';
-    request.open('GET', requestURL);
-   	request.addEventListener('load', function(event) {
+	
+     
+var listData = mongoConnection.collection('scheduleData'); 
 
-        if(event.target.status !== 200) {
-          var message = event.target.response;
-          alert(message);
-        }
-        else {
-         	var indexData = JSON.parse(event.target.response);
-          
-          };
-         
-        };
-    request.send();
      
       
-      
-    
+listData.find({}).toArray(function (err, results){
+	
+	res.render('index', {classSet: results});
+
+});
   
-  res.render('index', {classSet: indexData});
+  // res.render('index', {classSet: listData});
+  
 });
 
 app.get('/edit', function(req, res, next) {
@@ -57,5 +63,11 @@ app.get('/edit', function(req, res, next) {
 //   res.render('edit');
 // });
 
-
+MongoClient.connect(mongoURL, function (err, connection) {
+  if (err) {
+    throw err;
+  }
+  mongoConnection = connection;
+  console.log("Established a connection to DB");
+});
 module.exports = app;
