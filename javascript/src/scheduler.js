@@ -122,6 +122,12 @@ class Scheduler {
     var length = document.querySelector('.length-input').value;
     var startTime = document.querySelector('.start-time-input').value;
     var endTime = document.querySelector('.end-time-input').value;
+    var dayHTML = document.querySelectorAll('.day-input:checked');
+    var days = '';
+    for(var i = 0; i < dayHTML.length; i++) {
+      days += dayHTML[i].value;
+    }
+
     if(!name || !length || !startTime || !endTime) {
       alert('Please enter valid name, length, start time, and end time');
     }
@@ -132,9 +138,10 @@ class Scheduler {
         name: name,
         length: length,
         startTime: startTime12,
-        endTime: endTime12
+        endTime: endTime12,
+        days: days
       };
-      this.breaks.push(breakGenerator(name, length, startTime, endTime));
+      this.breaks.push(breakGenerator(name, length, startTime, endTime, days));
       console.log('breaks after add: ', this.breaks);
       var breakTemplate = require('../../views/partials/break.handlebars');
       var breakHTML = breakTemplate(breakContext);
@@ -143,6 +150,9 @@ class Scheduler {
       document.querySelector('.length-input').value = '';
       document.querySelector('.start-time-input').value = '';
       document.querySelector('.end-time-input').value = '';
+      for(var i = 0; i < dayHTML.length; i++) {
+        dayHTML[i].checked = false;
+      }
     }
   }
 
