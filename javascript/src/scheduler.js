@@ -35,7 +35,7 @@ class Scheduler {
     var generateButton = document.getElementById('generate-schedules-button');
     generateButton.addEventListener('click', this.handleCreateSchedulesClick);
 
-    var saveButton = document.getElementById('generate-schedules-button');
+    var saveButton = document.getElementById('save-button');
     saveButton.addEventListener('click', this.handleSaveClick);
     let generateSchedulesButton = document.querySelector('#generate-schedules-button');
     generateSchedulesButton.addEventListener('click', this.handleCreateSchedulesClick);
@@ -231,7 +231,12 @@ class Scheduler {
   }
   // post form data to server
   handleSaveClick = (event) => {
-
+    console.log("Save button clicked");
+    var data = {"name": "schedule1"};
+    var request = new XMLHttpRequest();
+    request.open('POST', 'http://localhost:3000/schedules/save', true);
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.send(JSON.stringify(data));
   }
 }
 
