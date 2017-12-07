@@ -232,6 +232,8 @@ class Scheduler {
   // post form data to server
   handleSaveClick = (event) => {
     console.log("courses:", this.courses);
+    console.log("breaks:", this.breaks);
+    console.log("schedules:", this.schedules);
 
     console.log("Save button clicked");
     var data = {"name": "schedule1"};
