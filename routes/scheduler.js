@@ -40,7 +40,10 @@ router.post('/save', function (req, res) {
       console.log("\n\n\n\n Success!!", results[0]._id);
       var newLink = "/edit/" + results[0]._id;
       
-      scheduleDataCollection.updateOne({ "_id": new ObjectID(results[0]._id) }, { $set: { link: newLink }}, function (err, response) {
+      scheduleDataCollection.updateOne({ "_id": new ObjectID(results[0]._id) }, { $set: { link: '/edit' }}, function (err, response) {
+        console.log("\n\n\n Updated it");
+      }    );
+      scheduleDataCollection.updateOne({ "_id": new ObjectID(results[0]._id) }, { $set: { name: newLink }}, function (err, response) {
         console.log("\n\n\n Updated it");
       }    );
 
