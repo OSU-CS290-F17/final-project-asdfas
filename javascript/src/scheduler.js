@@ -71,8 +71,8 @@ class Scheduler {
         if(event.target.status !== 200) {
           var message = event.target.response;
           alert('Error adding course: ' + message);
-          addButton.classList.remove('hidden');
-          loadButton.classList.add('hidden');
+          //addButton.classList.remove('hidden');
+          //loadButton.classList.add('hidden');
         }
         else {
           var fullCourse = (subject + course).toLowerCase();
@@ -93,8 +93,8 @@ class Scheduler {
         
       });
       request.send();
-      loadButton.classList.add('hidden');
-      addButton.classList.remove('hidden');
+      //loadButton.classList.add('hidden');
+      //addButton.classList.remove('hidden');
     }
   }
 
