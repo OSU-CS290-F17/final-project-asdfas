@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var indexData = require('../dummyIndex');
+var ObjectID = require('mongodb').ObjectID;
 
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
@@ -20,8 +21,9 @@ var mongoConnection = null;
 //create
 router.post('/save', function (req, res) {
   var schedule = req.body;
-  var scheduleDataCollection = mongoConnection.collection('scheduleData');
 
+  console.log('\n\n\n Inside post route, adding this saved schedule link: ', schedule['link']);
+  var scheduleDataCollection = mongoConnection.collection('scheduleData');
   scheduleDataCollection.insertOne(schedule, (function (err, results) {
     if (err) {
       throw err;
@@ -29,6 +31,21 @@ router.post('/save', function (req, res) {
     res.status(200).send("Added schedule to database");
   }
   ));
+  //if ID was just generated
+  if (schedule['link'] == 'temp') {
+    scheduleDataCollection.find({ "link": "temp" }).toArray(function (err, results) {
+      if (err) {
+        throw err;
+      }
+      console.log("\n\n\n\n Success!!", results[0]._id);
+      var newLink = "/edit/" + results[0]._id;
+      
+      scheduleDataCollection.updateOne({ "_id": new ObjectID(results[0]._id) }, { $set: { link: newLink }}, function (err, response) {
+        console.log("\n\n\n Updated it");
+      }    );
+
+    });
+  }
 });
 
 //Read
@@ -52,7 +69,6 @@ router.post('/:id/save', function (req, res) {
   console.log("trying to find " + requestedId + " in mongo database");
 
   //if _id in DB, then update DB
-  var ObjectID = require('mongodb').ObjectID;
   scheduleDataCollection.updateOne({ "_id": new ObjectID(requestedId) }, schedule, function (err, response) {
     if (err) {
       res.status(500).header("Content-Type", 'text/plain');
@@ -76,7 +92,7 @@ router.delete('/:id/delete', function (req, res) {
 
   //if _id in DB, then remove it
   var ObjectID = require('mongodb').ObjectID;
-  scheduleDataCollection.removeOne( { "_id" : new ObjectID(requestedId) }, function (err, response) {
+  scheduleDataCollection.removeOne({ "_id": new ObjectID(requestedId) }, function (err, response) {
     if (err) {
       res.status(500).header("Content-Type", 'text/plain');
       res.send("Error removing class from DB");

@@ -256,17 +256,21 @@ class Scheduler {
     console.log("breaks:", this.breaks);
     console.log("schedules:", this.schedules);
     var classSet = {}
-    c//lassSet[courses] = this.courses;
-    // classSet.push( {breaks: this.breaks} );
-    // classSet.push( {schedules: this.schedules} );
+    classSet["name"] = "I love school";
+    classSet["credits"] = 12;
+    classSet["term"] = "Winter";
+    classSet["link"] = "temp";
+    classSet["courses"] = this.courses;
+    classSet["breaks"] = this.breaks;
+    classSet ["schedules"] = this.schedules;
 
 
     console.log("Save button clicked");
-    var data = {"name": "schedule1"};
+
     var request = new XMLHttpRequest();
     request.open('POST', 'http://localhost:3000/schedules/save', true);
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    request.send(JSON.stringify(data));
+    request.send(JSON.stringify(classSet));
 
 
   }
