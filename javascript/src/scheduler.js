@@ -62,11 +62,10 @@ class Scheduler {
       
       var loadButton = document.querySelector('.load');
       var addButton = document.querySelector('.add-course-button');
-      
+      addButton.classList.add('hidden');
+      loadButton.classList.remove('hidden');
 
       request.addEventListener('load', function(event) {
-        addButton.classList.add('hidden');
-        loadButton.classList.remove('hidden');
 
         if(event.target.status !== 200) {
           var message = event.target.response;
