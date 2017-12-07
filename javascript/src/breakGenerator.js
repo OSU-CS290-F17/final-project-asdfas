@@ -15,19 +15,21 @@ function hoursToString(hours) {
   return str;
 }
 
-function breakGenerator(name, length, startTime, endTime) {
+function breakGenerator(name, length, startTime, endTime, days) {
   startTime = parseFloat(startTime);
   endTime = parseFloat(endTime);
   length = parseInt(length);
   console.log('endTime:', endTime);
   console.log('startTime:', startTime);
   console.log('length:', length);
-  var numBreaks;
-  if(length === 30) {
-    numBreaks = (endTime - startTime) * 2;
-  }
-  else {
-    numBreaks = Math.trunc((endTime - startTime) * 2 - (length / 60));
+  var numBreaks = 0;
+  for(var i = startTime; i < endTime; i += 0.5) {
+    if((i + length / 60) <= endTime) {
+      numBreaks++;
+    }
+    else {
+      break;
+    }
   }
   var breakObj = {};
   breakObj[name] = {};
@@ -38,13 +40,14 @@ function breakGenerator(name, length, startTime, endTime) {
     var j = i.toString();
     breakObj[name]['sections'][j] = {};
     breakObj[name]['sections'][j]['length_minutes'] = length.toString();
-    var rangeStart = startTime + i * .5;
+    var rangeStart = startTime + i * 0.5;
     var rangeEnd = rangeStart + (length / 60);
     rangeStart = hoursToString(rangeStart);
     rangeEnd = hoursToString(rangeEnd);
     breakObj[name]['sections'][j]['time_range'] = rangeStart + '-' + rangeEnd;
+    breakObj[name]['sections'][j]['days'] = days;
     breakObj[name]['sections'][j]['time'] = parseInt(rangeStart);
-    breakObj[name]['sections'][j]['days'] = "MTWRF";
+
   }
   return breakObj;
 }
