@@ -4,10 +4,10 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 
-var mongoHost = "classmongo.engr.oregonstate.edu" //process.env.MONGO_HOST;         //
+var mongoHost = "classmongo.engr.oregonstate.edu" //process.env.MONGO_HOST;         
 var mongoPort = process.env.MONGO_PORT || 27017;
 var mongoUser = "cs290_gillens" //process.env.MONGO_USER;
-var mongoPassword = "cs290_gillens" // process.env.MONGO_PASSWORD;
+var mongoPassword = process.env.MONGO_PASSWORD;
 var mongoDBName = "cs290_gillens" //process.env.MONGO_DB;
 
 var mongoURL = 'mongodb://' + mongoUser + ':' + mongoPassword +
